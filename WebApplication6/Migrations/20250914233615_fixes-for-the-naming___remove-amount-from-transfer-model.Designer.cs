@@ -12,8 +12,8 @@ using WebApplication6;
 namespace WebApplication6.Migrations
 {
     [DbContext(typeof(DBcontext))]
-    [Migration("20250914222734_start-every-thing-starts-with-transaction-with-bank--bacause-asp.net-already-uses-transaction")]
-    partial class starteverythingstartswithtransactionwithbankbacauseaspnetalreadyusestransaction
+    [Migration("20250914233615_fixes-for-the-naming___remove-amount-from-transfer-model")]
+    partial class fixesforthenaming___removeamountfromtransfermodel
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -39,7 +39,7 @@ namespace WebApplication6.Migrations
                     b.Property<long>("balance")
                         .HasColumnType("bigint");
 
-                    b.Property<DateTime>("created_at")
+                    b.Property<DateTime>("createdAt")
                         .HasColumnType("datetime2");
 
                     b.Property<long?>("user_id")
@@ -100,11 +100,11 @@ namespace WebApplication6.Migrations
 
             modelBuilder.Entity("WebApplication6.Models.BankTransaction", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<long>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("id"));
 
                     b.Property<long?>("account_id")
                         .HasColumnType("bigint");
@@ -118,10 +118,10 @@ namespace WebApplication6.Migrations
                     b.Property<long?>("bankTransactionType_id")
                         .HasColumnType("bigint");
 
-                    b.Property<DateTime?>("created_at")
+                    b.Property<DateTime>("createdAt")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("Id");
+                    b.HasKey("id");
 
                     b.HasIndex("account_id");
 
@@ -218,20 +218,17 @@ namespace WebApplication6.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
 
-                    b.Property<long>("amount")
+                    b.Property<long?>("fromBankTransaction_id")
                         .HasColumnType("bigint");
 
-                    b.Property<long?>("from_id")
-                        .HasColumnType("bigint");
-
-                    b.Property<long?>("to_id")
+                    b.Property<long?>("toBankTransaction_id")
                         .HasColumnType("bigint");
 
                     b.HasKey("id");
 
-                    b.HasIndex("from_id");
+                    b.HasIndex("fromBankTransaction_id");
 
-                    b.HasIndex("to_id");
+                    b.HasIndex("toBankTransaction_id");
 
                     b.ToTable("transfers");
                 });
@@ -244,14 +241,14 @@ namespace WebApplication6.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("id"));
 
-                    b.Property<DateTime>("created_at")
+                    b.Property<DateTime>("createdAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("hashed_password")
+                    b.Property<string>("hashedPassword")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -259,7 +256,7 @@ namespace WebApplication6.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("user_name")
+                    b.Property<string>("userName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -306,17 +303,17 @@ namespace WebApplication6.Migrations
 
             modelBuilder.Entity("WebApplication6.Models.Transfer", b =>
                 {
-                    b.HasOne("WebApplication6.Models.BankTransaction", "from_account")
+                    b.HasOne("WebApplication6.Models.BankTransaction", "fromBankTransaction")
                         .WithMany()
-                        .HasForeignKey("from_id");
+                        .HasForeignKey("fromBankTransaction_id");
 
-                    b.HasOne("WebApplication6.Models.BankTransaction", "to_account")
+                    b.HasOne("WebApplication6.Models.BankTransaction", "toBankTransaction")
                         .WithMany()
-                        .HasForeignKey("to_id");
+                        .HasForeignKey("toBankTransaction_id");
 
-                    b.Navigation("from_account");
+                    b.Navigation("fromBankTransaction");
 
-                    b.Navigation("to_account");
+                    b.Navigation("toBankTransaction");
                 });
 #pragma warning restore 612, 618
         }

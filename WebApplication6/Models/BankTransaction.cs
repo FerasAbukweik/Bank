@@ -8,17 +8,17 @@ namespace WebApplication6.Models
     {
         [Key]
         public long id { get; set; }
-        public DateTime? created_at { get; set; }
+        public DateTime createdAt { get; set; }
         public long amount { get; set; }
 
 
-        [ForeignKey(nameof(account))]
+        [ForeignKey("account")]
         public long? account_id { get; set; }
         public Account? account { get; set; }
-        [ForeignKey(nameof(bankTransactionType))]
+        [ForeignKey("bankTransactionType")]
         public long? bankTransactionType_id { get; set; }
         public BankTransactionType? bankTransactionType { get; set; }
-        [ForeignKey(nameof(bankTransactionStatus))]
+        [ForeignKey("bankTransactionStatus")]
         public long? bankTransactionStatus_id { get; set; }
         public BankTransactionStatus? bankTransactionStatus { get; set; }
     }

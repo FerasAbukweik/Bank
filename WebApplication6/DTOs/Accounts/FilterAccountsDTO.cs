@@ -11,6 +11,6 @@ namespace WebApplication6.DTOs.Accounts
         public FilterUsersDTO? filterUsers { get; set; }
         public long? accountTypes_id { get; set; }
         public long? balance { get; set; }
-        public DateTime? created_at { get; set; }
+        public DateTime? createdAt { get; set; }
     }
 }

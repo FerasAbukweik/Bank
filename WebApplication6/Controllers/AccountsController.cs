@@ -16,7 +16,7 @@ namespace WebApplication6.Controllers
             {
             _Dbcontext = dbcontext;
             }
-        [HttpPost(nameof(add))]
+        [HttpPost("add")]
         public IActionResult add([FromBody]AddAccountDTO toAddData)
         {
             try
@@ -25,7 +25,7 @@ namespace WebApplication6.Controllers
                 {
                     user_id = toAddData.user_id,
                     accountType_id = toAddData.accountTypes_id,
-                    created_at = DateTime.Now
+                    createdAt = DateTime.Now
                 };
                 _Dbcontext.accounts.Add(accoutToAdd);
                 _Dbcontext.SaveChanges();
@@ -36,7 +36,7 @@ namespace WebApplication6.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        [HttpGet(nameof(filter))]
+        [HttpGet("filter")]
         public IActionResult filter([FromQuery]FilterAccountsDTO filterData)
         {
             try
@@ -45,13 +45,13 @@ namespace WebApplication6.Controllers
                 (filterData.id == null || filterData.id == a.id) &&
                 (filterData.user_id == null || filterData.user_id == a.user_id) &&
                 (filterData.filterUsers == null ||
-                (filterData.filterUsers.user_name == null || filterData.filterUsers.user_name == a.user.user_name) &&
+                (filterData.filterUsers.userName == null || filterData.filterUsers.userName == a.user.userName) &&
                 (filterData.filterUsers.email == null || filterData.filterUsers.email == a.user.email) &&
                 (filterData.filterUsers.phone == null || filterData.filterUsers.phone == a.user.phone) &&
-                (filterData.filterUsers.created_at == null || filterData.filterUsers.created_at == a.user.created_at)) &&
+                (filterData.filterUsers.createdAt == null || filterData.filterUsers.createdAt == a.user.createdAt)) &&
                 (filterData.accountTypes_id == null || filterData.accountTypes_id == a.accountType_id) &&
                 (filterData.balance == null || filterData.balance == a.balance) &&
-                (filterData.created_at == null || filterData.created_at == a.created_at))
+                (filterData.createdAt == null || filterData.createdAt == a.createdAt))
                                    orderby account.id descending
                                    select new ReturnAccountsDTO
                                    {
@@ -59,7 +59,7 @@ namespace WebApplication6.Controllers
                                        user_id = account.user_id ?? 0,
                                        accountTypes_id = account.accountType_id ?? 0,
                                        balance = account.balance,
-                                       created_at = account.created_at,
+                                       createdAt = account.createdAt,
                                        type = account.accountType != null ? account.accountType.type : ""
                                    };
                 return Ok(filteredData);
@@ -69,7 +69,7 @@ namespace WebApplication6.Controllers
                 return BadRequest(ex);
             }
         }
-        [HttpPut(nameof(update))]
+        [HttpPut("update")]
         public IActionResult update(UpdateAccountDTO toUpdate)
         {
             try
@@ -96,7 +96,7 @@ namespace WebApplication6.Controllers
             }
         }
 
-        [HttpDelete(nameof(delete))]
+        [HttpDelete("delete")]
         public IActionResult delete(long id)
         {
             try

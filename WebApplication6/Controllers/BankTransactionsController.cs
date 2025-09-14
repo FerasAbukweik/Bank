@@ -15,8 +15,8 @@ namespace WebApplication6.Controllers
         {
             _dbcontext = dbcontext;
         }
-        [HttpPost(nameof(add))]
-        public IActionResult add(AddBankTransactionDTO toAdd)
+        [HttpPost("add")]
+        public IActionResult add([FromBody]AddBankTransactionDTO toAdd)
         {
             try
             {
@@ -36,8 +36,8 @@ namespace WebApplication6.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        [HttpGet(nameof(filter))]
-        public IActionResult filter(FilterBankTransactionsDTO filterData)
+        [HttpGet("filter")]
+        public IActionResult filter([FromQuery]FilterBankTransactionsDTO filterData)
         {
             try
             {
@@ -49,7 +49,7 @@ namespace WebApplication6.Controllers
                                 select new ReturnBankTransactionsDTO
                                 {
                                     id = transaction.id,
-                                    created_at = transaction.created_at,
+                                    createdAt = transaction.createdAt,
                                     amount = transaction.amount,
                                     account_id = transaction.account_id,
                                     bankTransactionType_id = transaction.bankTransactionType_id,

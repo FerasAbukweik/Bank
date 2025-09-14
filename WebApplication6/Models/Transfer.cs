@@ -7,12 +7,13 @@ namespace WebApplication6.Models
     {
         [Key]
         public int id { get; set; }
-        [ForeignKey(nameof(from_account))]
-        public long? from_id { get; set; }
-        public BankTransaction? from_account { get; set; }
-        [ForeignKey(nameof(to_account))]
-        public long? to_id { get; set; }
-        public BankTransaction? to_account { get; set; }
-        public long amount { get; set; }
+
+
+        [ForeignKey("fromBankTransaction")]
+        public long? fromBankTransaction_id { get; set; }
+        public BankTransaction? fromBankTransaction { get; set; }
+        [ForeignKey("toBankTransaction")]
+        public long? toBankTransaction_id { get; set; }
+        public BankTransaction? toBankTransaction { get; set; }
     }
 }

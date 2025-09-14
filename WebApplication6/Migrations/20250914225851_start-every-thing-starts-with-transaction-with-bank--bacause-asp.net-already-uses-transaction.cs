@@ -61,6 +61,11 @@ namespace WebApplication6.Migrations
                 newName: "IX_accounts_accountType_id");
 
             migrationBuilder.RenameColumn(
+                name: "Id",
+                table: "bankTransactions",
+                newName: "id");
+
+            migrationBuilder.RenameColumn(
                 name: "transactionInfo_id__type",
                 table: "bankTransactions",
                 newName: "bankTransactionType_id");
@@ -88,7 +93,7 @@ namespace WebApplication6.Migrations
             migrationBuilder.AddPrimaryKey(
                 name: "PK_bankTransactions",
                 table: "bankTransactions",
-                column: "Id");
+                column: "id");
 
             migrationBuilder.CreateTable(
                 name: "bankTransactionInfo",
@@ -171,14 +176,14 @@ namespace WebApplication6.Migrations
                 table: "transfers",
                 column: "from_id",
                 principalTable: "bankTransactions",
-                principalColumn: "Id");
+                principalColumn: "id");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_transfers_bankTransactions_to_id",
                 table: "transfers",
                 column: "to_id",
                 principalTable: "bankTransactions",
-                principalColumn: "Id");
+                principalColumn: "id");
         }
 
         /// <inheritdoc />
@@ -231,6 +236,11 @@ namespace WebApplication6.Migrations
                 name: "IX_accounts_accountType_id",
                 table: "accounts",
                 newName: "IX_accounts_accountTypes_id");
+
+            migrationBuilder.RenameColumn(
+                name: "id",
+                table: "transactions",
+                newName: "Id");
 
             migrationBuilder.RenameColumn(
                 name: "bankTransactionType_id",

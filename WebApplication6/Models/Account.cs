@@ -8,14 +8,14 @@ namespace WebApplication6.Models
         [Key]
         public long id { get; set; }
         public long balance { get; set; }
-        public DateTime created_at { get; set; }
+        public DateTime createdAt { get; set; }
 
 
 
-        [ForeignKey(nameof(user))]
+        [ForeignKey("user")]
         public long? user_id { get; set; }
         public User? user { get; set; }
-        [ForeignKey(nameof(accountType))]
+        [ForeignKey("accountType")]
         public long? accountType_id { get; set; }
         public AccountType? accountType { get; set; }
     }

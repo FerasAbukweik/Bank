@@ -15,25 +15,25 @@ namespace WebApplication6.Controllers
         private DBcontext _Dbcontext;
 
         public UsersController(DBcontext dbcontext) { _Dbcontext = dbcontext; }
-        [HttpGet(nameof(filter))]
+        [HttpGet("filter")]
         public IActionResult filter([FromQuery]FilterUsersDTO filterData)
         {
             try
             {
                 var filteredData = from user in _Dbcontext.users.Where(u =>
                 (filterData.id == null || u.id == filterData.id) &&
-                (filterData.user_name == null || filterData.user_name == u.user_name) &&
+                (filterData.userName == null || filterData.userName == u.userName) &&
                 (filterData.email == null || filterData.email == u.email) &&
                 (filterData.phone == null || filterData.phone == u.phone) &&
-                (filterData.created_at == null || filterData.created_at == u.created_at))
+                (filterData.createdAt == null || filterData.createdAt == u.createdAt))
                                    orderby user.id descending
                                    select new ReturnUserDTO
                                    {
                                        id = user.id,
-                                       user_name = user.user_name,
+                                       userName = user.userName,
                                        email = user.email,
                                        phone = user.phone,
-                                       created_at = user.created_at
+                                       createdAt = user.createdAt
                                    };
                 return Ok(filteredData);
             }
@@ -43,19 +43,19 @@ namespace WebApplication6.Controllers
             }
         }
 
-        [HttpPost(nameof(add))]
+        [HttpPost("add")]
         public IActionResult add([FromBody]AddUserDTO toAddData)
         {
             try
             {
                 var foundUsers = _Dbcontext.users.FirstOrDefault(u =>
-                (u.user_name == toAddData.user_name) ||
+                (u.userName == toAddData.userName) ||
                 (u.phone == toAddData.phone) ||
                 (u.email == toAddData.email));
 
                 if (foundUsers != null)
                 {
-                    if (foundUsers.user_name == toAddData.user_name)
+                    if (foundUsers.userName == toAddData.userName)
                     {
                         return BadRequest("User Name Already Used");
                     }
@@ -70,11 +70,11 @@ namespace WebApplication6.Controllers
                 }
                 User user = new User
                 {
-                    user_name = toAddData.user_name,
-                    hashed_password = BCrypt.Net.BCrypt.HashPassword(toAddData.password),
+                    userName = toAddData.userName,
+                    hashedPassword = BCrypt.Net.BCrypt.HashPassword(toAddData.password),
                     email = toAddData.email,
                     phone = toAddData.phone,
-                    created_at = DateTime.Now,
+                    createdAt = DateTime.Now,
                 };
                 _Dbcontext.users.Add(user);
                 _Dbcontext.SaveChanges();
@@ -86,8 +86,8 @@ namespace WebApplication6.Controllers
             }
 
         }
-        [HttpPut(nameof(update))]
-        public IActionResult update(UpdateUserDTO toUpdate)
+        [HttpPut("update")]
+        public IActionResult update([FromBody]UpdateUserDTO toUpdate)
         {
             try
             {
@@ -96,13 +96,13 @@ namespace WebApplication6.Controllers
                 {
                     return BadRequest("User Not Found");
                 }
-                foundUser.user_name = toUpdate.user_name ?? foundUser.user_name;
+                foundUser.userName = toUpdate.userName ?? foundUser.userName;
                 foundUser.email = toUpdate.email ?? foundUser.email;
                 foundUser.phone = toUpdate.phone ?? foundUser.phone;
 
                 if (toUpdate.password != null)
                 {
-                    foundUser.hashed_password = BCrypt.Net.BCrypt.HashPassword(toUpdate.password);
+                    foundUser.hashedPassword = BCrypt.Net.BCrypt.HashPassword(toUpdate.password);
                 }
                 _Dbcontext.SaveChanges();
                 return Ok();
@@ -112,8 +112,8 @@ namespace WebApplication6.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        [HttpDelete(nameof(delete))]
-        public IActionResult delete(long id)
+        [HttpDelete("delete")]
+        public IActionResult delete([FromQuery]long id)
         {
             try
             {
