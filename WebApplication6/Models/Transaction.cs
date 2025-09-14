@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Transactions;
 
 namespace WebApplication6.Models
 {
@@ -14,11 +15,11 @@ namespace WebApplication6.Models
         [ForeignKey(nameof(account))]
         public long? account_id { get; set; }
         public Account? account { get; set; }
-        [ForeignKey(nameof(transactionInfo__type))] // transaction Types | Major Code Always 2
-        public long? transactionInfo_id__type { get; set; }
-        public transactionTypes? transactionInfo__type { get; set; }
-        [ForeignKey(nameof(transactionInfo__status))] // transaction Status | Major Code Always 1
-        public long? transactionInfo_id__status { get; set; }
-        public transactionTypes? transactionInfo__status { get; set; }
+        [ForeignKey(nameof(bankTransactionType))]
+        public long? bankTransactionType_id { get; set; }
+        public BankTransactionType? bankTransactionType { get; set; }
+        [ForeignKey(nameof(bankTransactionStatus))]
+        public long? bankTransactionStatus_id { get; set; }
+        public BankTransactionStatus? bankTransactionStatus { get; set; }
     }
 }

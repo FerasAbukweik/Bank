@@ -2,7 +2,7 @@
 
 namespace WebApplication6.Models
 {
-    public class AccountTypes
+    public class AccountType
     {
         [Key]
         public long id { set; get; }

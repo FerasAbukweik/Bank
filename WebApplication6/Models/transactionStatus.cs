@@ -2,7 +2,7 @@
 
 namespace WebApplication6.Models
 {
-    public class transactionStatus
+    public class BankTransactionStatus
     {
         [Key]
         public long id { get; set; }

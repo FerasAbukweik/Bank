@@ -15,8 +15,8 @@ namespace WebApplication6.Models
         [ForeignKey(nameof(user))]
         public long? user_id { get; set; }
         public User? user { get; set; }
-        [ForeignKey(nameof(accountTypes))]
-        public long? accountTypes_id { get; set; }
-        public AccountTypes? accountTypes { get; set; }
+        [ForeignKey(nameof(accountType))]
+        public long? accountType_id { get; set; }
+        public AccountType? accountType { get; set; }
     }
 }
