@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Reflection.Emit;
 using System.Security.Cryptography.Xml;
+using System.Transactions;
 using WebApplication6.Models;
 
 namespace WebApplication6
@@ -13,35 +14,34 @@ namespace WebApplication6
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<TransactionInfo>().HasData(
-                // majorCode = 1 -> transactionStatus                             minorCode ↓
-                new TransactionInfo { id = 1, majorCode = 1, minorCode = 1, info = "Pending" },
-                new TransactionInfo { id = 2, majorCode = 1, minorCode = 2, info = "Completed" },
-                new TransactionInfo { id = 3, majorCode = 1, minorCode = 3, info = "Failed" },
-                new TransactionInfo { id = 4, majorCode = 1, minorCode = 4, info = "Canceled" },
+            modelBuilder.Entity<transactionStatus>().HasData(
+                new transactionStatus { id = 1, status = "Pending" },
+                new transactionStatus { id = 2, status = "Completed" },
+                new transactionStatus { id = 3, status = "Failed" },
+                new transactionStatus { id = 4, status = "Canceled" });
 
-                // majorCode = 2 -> transactionTypes                              minorCode ↓
-                new TransactionInfo { id = 5, majorCode = 2, minorCode = 1, info = "Deposit" },
-                new TransactionInfo { id = 6, majorCode = 2, minorCode = 2, info = "Withdrawal" }
+            modelBuilder.Entity<transactionTypes>().HasData(
+                new transactionTypes { id = 1, type = "Deposit" },
+                new transactionTypes { id = 2, type = "Withdrawal" },
+                new transactionTypes { id = 3, type = "Send" },
+                new transactionTypes { id = 4, type = "Receive" }
                 );
 
-            modelBuilder.Entity<AccountInfo>().HasData(
-                // majorCode = 1 -> accountTypes                                  minorCode ↓
-                new TransactionInfo { id = 1, majorCode = 1, minorCode = 1, info = "Savings" },
-                new TransactionInfo { id = 2, majorCode = 1, minorCode = 2, info = "Current_Checking" },
-                new TransactionInfo { id = 3, majorCode = 1, minorCode = 3, info = "Fixed_Deposit" },
-                new TransactionInfo { id = 4, majorCode = 1, minorCode = 4, info = "Recurring_Deposit" },
-                new TransactionInfo { id = 5, majorCode = 1, minorCode = 5, info = "NRI_Accounts" }
-                );
-
+            modelBuilder.Entity<AccountTypes>().HasData(
+                new AccountTypes { id = 1, type = "Savings" },
+                new AccountTypes { id = 2, type = "Current_Checking" },
+                new AccountTypes { id = 3, type = "Fixed_Deposit" },
+                new AccountTypes { id = 4, type = "Recurring_Deposit" },
+                new AccountTypes { id = 5, type = "NRI_Accounts" });
         }
 
         public DbSet<User> users { get; set; }
         public DbSet<Account> accounts { get; set; }
-        public DbSet<Transaction> transactions { get; set; }
+        public DbSet<BankTransaction> transactions { get; set; }
         public DbSet<Transfer> transfers { get; set; }
-        public DbSet<TransactionInfo> transactionInfo { get; set; }
-        public DbSet<AccountInfo> accountInfo { get; set; }
+        public DbSet<transactionTypes> transactionInfo { get; set; }
+        public DbSet<transactionStatus> transactionStatuses { get; set; }
+        public DbSet<AccountTypes> accountInfo { get; set; }
 
     }
 }

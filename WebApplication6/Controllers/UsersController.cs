@@ -44,7 +44,7 @@ namespace WebApplication6.Controllers
         }
 
         [HttpPost(nameof(add))]
-        public IActionResult add([FromBody]SaveUserDTO toAddData)
+        public IActionResult add([FromBody]AddUserDTO toAddData)
         {
             try
             {

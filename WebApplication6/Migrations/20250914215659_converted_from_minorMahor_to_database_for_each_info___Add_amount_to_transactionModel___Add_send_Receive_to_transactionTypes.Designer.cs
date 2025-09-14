@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebApplication6;
 
@@ -11,9 +12,11 @@ using WebApplication6;
 namespace WebApplication6.Migrations
 {
     [DbContext(typeof(DBcontext))]
-    partial class DBcontextModelSnapshot : ModelSnapshot
+    [Migration("20250914215659_converted_from_minorMahor_to_database_for_each_info___Add_amount_to_transactionModel___Add_send_Receive_to_transactionTypes")]
+    partial class converted_from_minorMahor_to_database_for_each_info___Add_amount_to_transactionModel___Add_send_Receive_to_transactionTypes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

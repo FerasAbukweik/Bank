@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WebApplication6.Models
 {
-    public class Transaction
+    public class BankTransaction
     {
         [Key]
         public long Id { get; set; }
@@ -16,9 +16,9 @@ namespace WebApplication6.Models
         public Account? account { get; set; }
         [ForeignKey(nameof(transactionInfo__type))] // transaction Types | Major Code Always 2
         public long? transactionInfo_id__type { get; set; }
-        public TransactionInfo? transactionInfo__type { get; set; }
+        public transactionTypes? transactionInfo__type { get; set; }
         [ForeignKey(nameof(transactionInfo__status))] // transaction Status | Major Code Always 1
         public long? transactionInfo_id__status { get; set; }
-        public TransactionInfo? transactionInfo__status { get; set; }
+        public transactionTypes? transactionInfo__status { get; set; }
     }
 }

@@ -4,6 +4,6 @@
     {
         public long id { get; set; }
         public long? user_id { get; set; }
-        public long? accountInfo_id__type { get; set; }
+        public long? accountTypes_id { get; set; }
     }
 }

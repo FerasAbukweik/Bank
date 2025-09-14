@@ -1,6 +1,6 @@
 ﻿namespace WebApplication6.DTOs.Users
 {
-    public class SaveUserDTO
+    public class AddUserDTO
     {
         public string user_name { get; set; }
         public string password { get; set; }
