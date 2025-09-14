@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebApplication6;
 
@@ -11,9 +12,11 @@ using WebApplication6;
 namespace WebApplication6.Migrations
 {
     [DbContext(typeof(DBcontext))]
-    partial class DBcontextModelSnapshot : ModelSnapshot
+    [Migration("20250914194629_add_table_for_accountsTypes_and_transactionsInfo___Modified_accounts_and_transactionsTable_to_Work_With_Their_New_tables")]
+    partial class add_table_for_accountsTypes_and_transactionsInfo___Modified_accounts_and_transactionsTable_to_Work_With_Their_New_tables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

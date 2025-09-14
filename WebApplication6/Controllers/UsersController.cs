@@ -14,17 +14,17 @@ namespace WebApplication6.Controllers
         private DBcontext _Dbcontext;
 
         public UsersController(DBcontext dbcontext) { _Dbcontext = dbcontext; }
-        [HttpGet(nameof(Filter))]
-        public IActionResult Filter([FromQuery]FilterUsersDTO FilterData)
+        [HttpGet(nameof(filter))]
+        public IActionResult filter([FromQuery]FilterUsersDTO filterData)
         {
             try
             {
-                var FilteredData = from user in _Dbcontext.users.Where(u =>
-                (FilterData.id == null || u.id == FilterData.id) &&
-                (FilterData.user_name == null || FilterData.user_name == u.user_name) &&
-                (FilterData.email == null || FilterData.email == u.email) &&
-                (FilterData.phone == null || FilterData.phone == u.phone) &&
-                (FilterData.created_at == null || FilterData.created_at == u.created_at))
+                var filteredData = from user in _Dbcontext.users.Where(u =>
+                (filterData.id == null || u.id == filterData.id) &&
+                (filterData.user_name == null || filterData.user_name == u.user_name) &&
+                (filterData.email == null || filterData.email == u.email) &&
+                (filterData.phone == null || filterData.phone == u.phone) &&
+                (filterData.created_at == null || filterData.created_at == u.created_at))
                                    orderby user.id descending
                                    select new UserDTO
                                    {
@@ -34,7 +34,7 @@ namespace WebApplication6.Controllers
                                        phone = user.phone,
                                        created_at = user.created_at
                                    };
-                return Ok(FilteredData);
+                return Ok(filteredData);
             }
             catch (Exception ex)
             {

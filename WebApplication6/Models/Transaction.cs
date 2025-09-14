@@ -7,13 +7,18 @@ namespace WebApplication6.Models
     {
         [Key]
         public long Id { get; set; }
-        [ForeignKey(nameof(account))]
+        public DateTime? created_at { get; set; }
         public long amount { get; set; }
+
+
+        [ForeignKey(nameof(account))]
         public long? account_id { get; set; }
         public Account? account { get; set; }
-        public TransactionType type { get; set; }
-        public TransactionStatus status { get; set; }
-        public DateTime? created_at { get; set; }
-
+        [ForeignKey(nameof(transactionInfo__type))] // transaction Types | Major Code Always 2
+        public long? transactionInfo_id__type { get; set; }
+        public TransactionInfo? transactionInfo__type { get; set; }
+        [ForeignKey(nameof(transactionInfo__status))] // transaction Status | Major Code Always 1
+        public long? transactionInfo_id__status { get; set; }
+        public TransactionInfo? transactionInfo__status { get; set; }
     }
 }

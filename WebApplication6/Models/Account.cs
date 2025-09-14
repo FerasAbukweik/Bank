@@ -7,12 +7,16 @@ namespace WebApplication6.Models
     {
         [Key]
         public long id { get; set; }
-        [ForeignKey (nameof(user))]
-        public long? user_id { get; set; }
-        public User? user  { get; set; }
-        public string account_type { get; set; }
-        public string balance { get; set; }
+        public long balance { get; set; }
         public DateTime created_at { get; set; }
 
+
+
+        [ForeignKey(nameof(user))]
+        public long? user_id { get; set; }
+        public User? user { get; set; }
+        [ForeignKey(nameof(accountInfo__type))]  // Account Type | Major Code Always 1
+        public long accountInfo_id__type { get; set; }
+        public AccountInfo accountInfo__type { get; set; }
     }
 }

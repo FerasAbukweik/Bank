@@ -7,6 +7,8 @@ namespace WebApplication6.Models
     {
         [Key]
         public int id { get; set; }
+
+
         [ForeignKey(nameof(from_account))]
         public long? from_id { get; set; }
         public Transaction? from_account { get; set; }
