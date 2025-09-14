@@ -37,10 +37,10 @@ namespace WebApplication6
 
         public DbSet<User> users { get; set; }
         public DbSet<Account> accounts { get; set; }
-        public DbSet<BankTransaction> transactions { get; set; }
+        public DbSet<BankTransaction> bankTransactions { get; set; }
         public DbSet<Transfer> transfers { get; set; }
-        public DbSet<BankTransactionType> transactionInfo { get; set; }
-        public DbSet<BankTransactionStatus> transactionStatuses { get; set; }
+        public DbSet<BankTransactionType> bankTransactionInfo { get; set; }
+        public DbSet<BankTransactionStatus> bankTransactionStatuses { get; set; }
         public DbSet<AccountType> accountInfo { get; set; }
 
     }

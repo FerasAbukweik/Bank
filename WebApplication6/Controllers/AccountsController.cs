@@ -53,7 +53,7 @@ namespace WebApplication6.Controllers
                 (filterData.balance == null || filterData.balance == a.balance) &&
                 (filterData.created_at == null || filterData.created_at == a.created_at))
                                    orderby account.id descending
-                                   select new AccountsDTO
+                                   select new ReturnAccountsDTO
                                    {
                                        id = account.id,
                                        user_id = account.user_id ?? 0,

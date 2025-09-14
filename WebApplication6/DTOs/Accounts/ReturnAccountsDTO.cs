@@ -3,7 +3,7 @@ using WebApplication6.Models;
 
 namespace WebApplication6.DTOs.Accounts
 {
-    public class AccountsDTO
+    public class ReturnAccountsDTO
     {
         public long id { get; set; }
         public long user_id { get; set; }

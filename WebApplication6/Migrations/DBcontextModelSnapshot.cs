@@ -126,7 +126,7 @@ namespace WebApplication6.Migrations
 
                     b.HasIndex("bankTransactionType_id");
 
-                    b.ToTable("transactions");
+                    b.ToTable("bankTransactions");
                 });
 
             modelBuilder.Entity("WebApplication6.Models.BankTransactionStatus", b =>
@@ -143,7 +143,7 @@ namespace WebApplication6.Migrations
 
                     b.HasKey("id");
 
-                    b.ToTable("transactionStatuses");
+                    b.ToTable("bankTransactionStatuses");
 
                     b.HasData(
                         new
@@ -182,7 +182,7 @@ namespace WebApplication6.Migrations
 
                     b.HasKey("id");
 
-                    b.ToTable("transactionInfo");
+                    b.ToTable("bankTransactionInfo");
 
                     b.HasData(
                         new

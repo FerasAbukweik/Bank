@@ -4,14 +4,13 @@ using WebApplication6.Models;
 
 namespace WebApplication6.DTOs.Transactions
 {
-    public class TransactionsDTO
+    public class ReturnBankTransactionsDTO
     {
-        [Key]
-        public long Id { get; set; }
+        public long id { get; set; }
         public DateTime? created_at { get; set; }
         public long amount { get; set; }
         public long? account_id { get; set; }
-        public long? transactionType_id { get; set; }
-        public long? TransactionStatus_id { get; set; }
+        public long? bankTransactionType_id { get; set; }
+        public long? bankTransactionStatus_id { get; set; }
     }
 }

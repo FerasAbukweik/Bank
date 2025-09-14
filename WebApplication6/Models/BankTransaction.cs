@@ -7,7 +7,7 @@ namespace WebApplication6.Models
     public class BankTransaction
     {
         [Key]
-        public long Id { get; set; }
+        public long id { get; set; }
         public DateTime? created_at { get; set; }
         public long amount { get; set; }
 

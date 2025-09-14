@@ -27,7 +27,7 @@ namespace WebApplication6.Controllers
                 (filterData.phone == null || filterData.phone == u.phone) &&
                 (filterData.created_at == null || filterData.created_at == u.created_at))
                                    orderby user.id descending
-                                   select new UserDTO
+                                   select new ReturnUserDTO
                                    {
                                        id = user.id,
                                        user_name = user.user_name,

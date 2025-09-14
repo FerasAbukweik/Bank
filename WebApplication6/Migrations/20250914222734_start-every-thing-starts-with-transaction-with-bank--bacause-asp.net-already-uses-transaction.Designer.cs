@@ -12,7 +12,7 @@ using WebApplication6;
 namespace WebApplication6.Migrations
 {
     [DbContext(typeof(DBcontext))]
-    [Migration("20250914221144_start-every-thing-starts-with-transaction-with-bank--bacause-asp.net-already-uses-transaction")]
+    [Migration("20250914222734_start-every-thing-starts-with-transaction-with-bank--bacause-asp.net-already-uses-transaction")]
     partial class starteverythingstartswithtransactionwithbankbacauseaspnetalreadyusestransaction
     {
         /// <inheritdoc />
@@ -129,7 +129,7 @@ namespace WebApplication6.Migrations
 
                     b.HasIndex("bankTransactionType_id");
 
-                    b.ToTable("transactions");
+                    b.ToTable("bankTransactions");
                 });
 
             modelBuilder.Entity("WebApplication6.Models.BankTransactionStatus", b =>
@@ -146,7 +146,7 @@ namespace WebApplication6.Migrations
 
                     b.HasKey("id");
 
-                    b.ToTable("transactionStatuses");
+                    b.ToTable("bankTransactionStatuses");
 
                     b.HasData(
                         new
@@ -185,7 +185,7 @@ namespace WebApplication6.Migrations
 
                     b.HasKey("id");
 
-                    b.ToTable("transactionInfo");
+                    b.ToTable("bankTransactionInfo");
 
                     b.HasData(
                         new

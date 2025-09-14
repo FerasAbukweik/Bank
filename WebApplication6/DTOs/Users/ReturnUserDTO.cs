@@ -2,7 +2,7 @@
 
 namespace WebApplication6.DTOs.Users
 {
-    public class UserDTO
+    public class ReturnUserDTO
     {
         public long id { get; set; }
         public string user_name { get; set; }
