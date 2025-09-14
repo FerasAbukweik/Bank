@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Numerics;
 using WebApplication6.DTOs.Users;
 using WebApplication6.Models;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace WebApplication6.Controllers
 {
@@ -69,7 +70,6 @@ namespace WebApplication6.Controllers
                 }
                 User user = new User
                 {
-                    id = 0,
                     user_name = toAddData.user_name,
                     hashed_password = BCrypt.Net.BCrypt.HashPassword(toAddData.password),
                     email = toAddData.email,
@@ -85,6 +85,51 @@ namespace WebApplication6.Controllers
                 return BadRequest(ex.Message);
             }
 
+        }
+        [HttpPut(nameof(update))]
+        public IActionResult update(UpdateUserDTO toUpdate)
+        {
+            try
+            {
+                var foundUser = _Dbcontext.users.FirstOrDefault(u => u.id == toUpdate.id);
+                if (foundUser == null)
+                {
+                    return BadRequest("User Not Found");
+                }
+                foundUser.user_name = toUpdate.user_name ?? foundUser.user_name;
+                foundUser.email = toUpdate.email ?? foundUser.email;
+                foundUser.phone = toUpdate.phone ?? foundUser.phone;
+
+                if (toUpdate.password != null)
+                {
+                    foundUser.hashed_password = BCrypt.Net.BCrypt.HashPassword(toUpdate.password);
+                }
+                _Dbcontext.SaveChanges();
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpDelete(nameof(delete))]
+        public IActionResult delete(long id)
+        {
+            try
+            {
+                var foundUser = _Dbcontext.users.FirstOrDefault(u => u.id == id);
+                if (foundUser == null)
+                {
+                    return BadRequest("User Not Found");
+                }
+                _Dbcontext.users.Remove(foundUser);
+                _Dbcontext.SaveChanges();
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

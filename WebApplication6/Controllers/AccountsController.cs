@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebApplication6.DTOs.Accounts;
 using WebApplication6.Models;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace WebApplication6.Controllers
 {
@@ -22,10 +23,8 @@ namespace WebApplication6.Controllers
             {
                 Account accoutToAdd = new Account
                 {
-                    id = 0,
                     user_id = toAddData.user_id,
                     accountInfo_id__type = toAddData.accountInfo_id__type,
-                    balance = 0,
                     created_at = DateTime.Now
                 };
                 _Dbcontext.accounts.Add(accoutToAdd);
@@ -58,16 +57,62 @@ namespace WebApplication6.Controllers
                                    {
                                        id = account.id,
                                        user_id = account.user_id ?? 0,
-                                       accountInfo_id__type = account.accountInfo_id__type,
+                                       accountInfo_id__type = account.accountInfo_id__type ?? 0,
                                        balance = account.balance,
                                        created_at = account.created_at,
                                        type = account.accountInfo__type.info
                                    };
                 return Ok(filteredData);
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                return BadRequest(e);
+                return BadRequest(ex);
+            }
+        }
+        [HttpPut(nameof(update))]
+        public IActionResult update(UpdateAccountDTO toUpdate)
+        {
+            try
+            {
+                var foundAccount = _Dbcontext.accounts.FirstOrDefault(a => a.id == toUpdate.id);
+                if (foundAccount == null)
+                {
+                    return BadRequest("Account Not Found");
+                }
+                if (toUpdate.user_id != 0 && toUpdate.user_id != null)
+                {
+                    foundAccount.user_id = toUpdate.user_id;
+                }
+                if (toUpdate.accountInfo_id__type != 0 && toUpdate.accountInfo_id__type != null)
+                {
+                    foundAccount.accountInfo_id__type = toUpdate.accountInfo_id__type;
+                }
+                _Dbcontext.SaveChanges();
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpDelete(nameof(delete))]
+        public IActionResult delete(long id)
+        {
+            try
+            {
+                var foundAccount = _Dbcontext.accounts.FirstOrDefault(a => a.id == id);
+                if (foundAccount == null)
+                {
+                    return BadRequest("Account Not Found");
+                }
+                _Dbcontext.accounts.Remove(foundAccount);
+                _Dbcontext.SaveChanges();
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
             }
         }
     }

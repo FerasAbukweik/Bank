@@ -16,7 +16,7 @@ namespace WebApplication6.Models
         public long? user_id { get; set; }
         public User? user { get; set; }
         [ForeignKey(nameof(accountInfo__type))]  // Account Type | Major Code Always 1
-        public long accountInfo_id__type { get; set; }
-        public AccountInfo accountInfo__type { get; set; }
+        public long? accountInfo_id__type { get; set; }
+        public AccountInfo? accountInfo__type { get; set; }
     }
 }
