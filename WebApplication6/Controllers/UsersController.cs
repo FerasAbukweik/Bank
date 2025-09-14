@@ -15,7 +15,7 @@ namespace WebApplication6.Controllers
 
         public UsersController(DBcontext dbcontext) { _Dbcontext = dbcontext; }
         [HttpGet(nameof(Filter))]
-        public IActionResult Filter(FilterUsersDTO FilterData)
+        public IActionResult Filter([FromQuery]FilterUsersDTO FilterData)
         {
             try
             {
@@ -43,7 +43,7 @@ namespace WebApplication6.Controllers
         }
 
         [HttpPost(nameof(add))]
-        public IActionResult add(SaveUserDTO toAddData)
+        public IActionResult add([FromBody]SaveUserDTO toAddData)
         {
             try
             {

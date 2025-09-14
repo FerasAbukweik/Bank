@@ -10,7 +10,6 @@ namespace WebApplication6
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-
         }
 
         public DbSet<User> users { get; set; }
