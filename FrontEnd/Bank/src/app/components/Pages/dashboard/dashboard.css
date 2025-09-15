@@ -4,14 +4,6 @@
     flex-direction: column;
 }
 
-.title{
-    font-size: 2rem;
-    font-weight: bold;
-    display: block;
-    margin: 35px;
-    color: #1f2d43;
-}
-
 .containers-row {
   display: flex;
   justify-content: start;

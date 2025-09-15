@@ -8,7 +8,7 @@
 .card {
   flex: 1;
   min-width: 180px;
-  background: white;
+  background-color: white;
   border-radius: 1rem;
   box-shadow: 0 0px 12px rgba(0, 0, 0, 0.1);
   display: flex;
@@ -16,7 +16,15 @@
   min-height: 250px;
 }
 
-    .card .header {
+.title{
+    font-size: 2rem;
+    font-weight: bold;
+    display: block;
+    margin: 35px;
+    color: #1f2d43;
+}
+
+   .container-text-header {
       font-size: 1.2rem;
       font-weight: 600;
       color: #444;
