@@ -28,15 +28,15 @@ namespace WebApplication6
 
             modelBuilder.Entity<AccountType>().HasData(
                 new AccountType { id = 1, type = "Savings" },
-                new AccountType { id = 2, type = "Current_Checking" },
-                new AccountType { id = 3, type = "Fixed_Deposit" },
-                new AccountType { id = 4, type = "Recurring_Deposit" },
-                new AccountType { id = 5, type = "NRI_Accounts" });
+                new AccountType { id = 2, type = "Current/Checking" },
+                new AccountType { id = 3, type = "Fixed/Deposit" },
+                new AccountType { id = 4, type = "Recurring/Deposit" },
+                new AccountType { id = 5, type = "NRI/Accounts" });
 
             modelBuilder.Entity<BankRole>().HasData(
-                new BankRole { id = 1, role = "Admin" },
-                new BankRole { id = 2, role = "Manager" },
-                new BankRole { id = 3, role = "customer" });
+                new BankRole { id = 1, role = 1791, roleName = "Client" }, 
+                new BankRole { id = 2, role = 1966 , roleName = "Manager" },
+                new BankRole { id = 3, role = -1 , roleName = "Admin" }); // -1 => Full Access
         }
 
         public DbSet<User> users { get; set; }

@@ -10,6 +10,6 @@ namespace WebApplication6.DTOs.Accounts
         public long? accountTypes_id { get; set; }
         public long balance { get; set; }
         public DateTime createdAt { get; set; }
-        public String type { get; set; }
+        public String? type { get; set; }
     }
 }

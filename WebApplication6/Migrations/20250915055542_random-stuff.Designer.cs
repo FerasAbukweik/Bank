@@ -12,8 +12,8 @@ using WebApplication6;
 namespace WebApplication6.Migrations
 {
     [DbContext(typeof(DBcontext))]
-    [Migration("20250915005702_add-bank-roles-table")]
-    partial class addbankrolestable
+    [Migration("20250915055542_random-stuff")]
+    partial class randomstuff
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -79,34 +79,37 @@ namespace WebApplication6.Migrations
                         new
                         {
                             id = 2L,
-                            type = "Current_Checking"
+                            type = "Current/Checking"
                         },
                         new
                         {
                             id = 3L,
-                            type = "Fixed_Deposit"
+                            type = "Fixed/Deposit"
                         },
                         new
                         {
                             id = 4L,
-                            type = "Recurring_Deposit"
+                            type = "Recurring/Deposit"
                         },
                         new
                         {
                             id = 5L,
-                            type = "NRI_Accounts"
+                            type = "NRI/Accounts"
                         });
                 });
 
             modelBuilder.Entity("WebApplication6.Models.BankRole", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<long>("id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("id"));
+
+                    b.Property<int>("role")
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
-
-                    b.Property<string>("role")
+                    b.Property<string>("roleName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -117,18 +120,21 @@ namespace WebApplication6.Migrations
                     b.HasData(
                         new
                         {
-                            id = 1,
-                            role = "Admin"
+                            id = 1L,
+                            role = 1791,
+                            roleName = "Client"
                         },
                         new
                         {
-                            id = 2,
-                            role = "Manager"
+                            id = 2L,
+                            role = 1966,
+                            roleName = "Manager"
                         },
                         new
                         {
-                            id = 3,
-                            role = "customer"
+                            id = 3L,
+                            role = -1,
+                            roleName = "Admin"
                         });
                 });
 
@@ -275,6 +281,9 @@ namespace WebApplication6.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("id"));
 
+                    b.Property<long>("BankRole_id")
+                        .HasColumnType("bigint");
+
                     b.Property<DateTime>("createdAt")
                         .HasColumnType("datetime2");
 
@@ -295,6 +304,8 @@ namespace WebApplication6.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("id");
+
+                    b.HasIndex("BankRole_id");
 
                     b.ToTable("users");
                 });
@@ -348,6 +359,17 @@ namespace WebApplication6.Migrations
                     b.Navigation("fromBankTransaction");
 
                     b.Navigation("toBankTransaction");
+                });
+
+            modelBuilder.Entity("WebApplication6.Models.User", b =>
+                {
+                    b.HasOne("WebApplication6.Models.BankRole", "bankRole")
+                        .WithMany()
+                        .HasForeignKey("BankRole_id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("bankRole");
                 });
 #pragma warning restore 612, 618
         }

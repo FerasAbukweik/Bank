@@ -1,10 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace WebApplication6.Models
+﻿namespace WebApplication6.DTOs.Role
 {
-    public class BankRole
+    public class ReturnBankRoleDTO
     {
-        [Key]
         public long id { get; set; }
         public int role { get; set; }
         public string roleName { get; set; }

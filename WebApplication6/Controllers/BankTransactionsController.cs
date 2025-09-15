@@ -1,23 +1,33 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Transactions;
+using System.Security.Claims;
 using WebApplication6.DTOs.Transactions;
 using WebApplication6.Models;
 
 namespace WebApplication6.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class TransactionsController : ControllerBase
     {
         private DBcontext _dbcontext;
+        private int Role => int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value ?? "0");
+        private long UserId => int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value ?? "0");
+
         public TransactionsController(DBcontext dbcontext)
         {
             _dbcontext = dbcontext;
         }
-        [HttpPost("add")]
-        public IActionResult add([FromBody]AddBankTransactionDTO toAdd)
+
+        [HttpPost("add")] //16
+        public IActionResult add([FromBody] AddBankTransactionDTO toAdd)
         {
+            if (Role != -1 && !((Role & 16) == 16 && UserId == toAdd.account_id))
+            {
+                return BadRequest("User does not have permission to add this transaction");
+            }
+
             try
             {
                 BankTransaction toAddTransaction = new BankTransaction
@@ -36,16 +46,22 @@ namespace WebApplication6.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        [HttpGet("filter")]
-        public IActionResult filter([FromQuery]FilterBankTransactionsDTO filterData)
+
+        [HttpGet("filter")] //32
+        public IActionResult filter([FromQuery] FilterBankTransactionsDTO filterData)
         {
+            if (Role != -1 && (Role & 32) != 32)
+            {
+                return BadRequest("User does not have permission to access transactions");
+            }
+
             try
             {
                 var foundData = from transaction in _dbcontext.bankTransactions.Where(t =>
-                (filterData.id == null || filterData.id == t.id) &&
-                (filterData.account_id == null || filterData.account_id == t.account_id) &&
-                (filterData.bankTransactionType_id == null || filterData.bankTransactionType_id == t.bankTransactionType_id) &&
-                (filterData.bankTransactionStatus_id == null || filterData.bankTransactionStatus_id == t.bankTransactionStatus_id))
+                    (filterData.id == null || filterData.id == t.id) &&
+                    (filterData.account_id == null || filterData.account_id == t.account_id) &&
+                    (filterData.bankTransactionType_id == null || filterData.bankTransactionType_id == t.bankTransactionType_id) &&
+                    (filterData.bankTransactionStatus_id == null || filterData.bankTransactionStatus_id == t.bankTransactionStatus_id))
                                 select new ReturnBankTransactionsDTO
                                 {
                                     id = transaction.id,

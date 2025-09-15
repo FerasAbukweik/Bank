@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -13,38 +14,43 @@ namespace WebApplication6.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private DBcontext _dbcontext;
+        private readonly DBcontext _dbcontext;
+
         public AuthController(DBcontext dbcontext)
         {
             _dbcontext = dbcontext;
         }
-        [HttpGet("login")]
-        public IActionResult login([FromQuery]LoginDTO loginData)
+
+        [HttpPost("login")]
+        public IActionResult login([FromBody] LoginDTO loginData)
         {
             User? user = _dbcontext.users.FirstOrDefault(u => u.userName == loginData.userName);
+
             if (user == null || !BCrypt.Net.BCrypt.Verify(loginData.Password, user.hashedPassword))
             {
-                return BadRequest("Wrong Info");
+                return BadRequest("Wrong Input");
             }
+
             return Ok(generateJWTToken(user));
         }
 
         private string generateJWTToken(User user)
         {
-            var claims = new List<Claim>();
-            claims.Add(new Claim(ClaimTypes.NameIdentifier, user.id.ToString()));
-            claims.Add(new Claim(ClaimTypes.Name, user.userName));
-            claims.Add(new Claim(ClaimTypes.Role, _dbcontext.bankRoles.FirstOrDefault(r=>r.id == (int)BankRoleEnums.customer)?.role ?? "customer"));
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.NameIdentifier, user.id.ToString()),
+                new Claim(ClaimTypes.Name, user.userName),
+                new Claim(ClaimTypes.Role, user.bankRole?.role.ToString() ?? nameof(BankRoleEnums.Customer))
+            };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("mdkfa#&$(*1u8fhq(Q@(hfngoaoa892#*(@hufiai"));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
-            var token = new JwtSecurityToken
-                (
+            var token = new JwtSecurityToken(
                 claims: claims,
                 signingCredentials: creds,
                 expires: DateTime.Now.AddHours(1)
-                );
+            );
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
