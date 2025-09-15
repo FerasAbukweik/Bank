@@ -6,6 +6,5 @@
         public string password { get; set; }
         public string email { get; set; }
         public string phone { get; set; }
-        public long? BankRole_id { get; set; }
     }
 }

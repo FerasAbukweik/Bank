@@ -13,7 +13,7 @@ namespace WebApplication6.Models
         public string phone { get; set; }
         public DateTime createdAt { get; set; }
         [ForeignKey("bankRole")]
-        public long BankRole_id { get; set; }
-        public BankRole bankRole { get; set; }
+        public long? BankRole_id { get; set; }
+        public BankRole? bankRole { get; set; }
     }
 }

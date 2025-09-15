@@ -14,18 +14,6 @@ namespace WebApplication6
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<BankTransactionStatus>().HasData(
-                new BankTransactionStatus { id = 1, status = "Pending" },
-                new BankTransactionStatus { id = 2, status = "Completed" },
-                new BankTransactionStatus { id = 3, status = "Failed" },
-                new BankTransactionStatus { id = 4, status = "Canceled" });
-
-            modelBuilder.Entity<BankTransactionType>().HasData(
-                new BankTransactionType { id = 1, type = "Deposit" },
-                new BankTransactionType { id = 2, type = "Withdrawal" },
-                new BankTransactionType { id = 3, type = "Send" },
-                new BankTransactionType { id = 4, type = "Receive" });
-
             modelBuilder.Entity<AccountType>().HasData(
                 new AccountType { id = 1, type = "Savings" },
                 new AccountType { id = 2, type = "Current/Checking" },
@@ -34,17 +22,13 @@ namespace WebApplication6
                 new AccountType { id = 5, type = "NRI/Accounts" });
 
             modelBuilder.Entity<BankRole>().HasData(
-                new BankRole { id = 1, role = 1791, roleName = "Client" }, 
-                new BankRole { id = 2, role = 1966 , roleName = "Manager" },
+                new BankRole { id = 1, role = 447, roleName = "Client" }, 
                 new BankRole { id = 3, role = -1 , roleName = "Admin" }); // -1 => Full Access
         }
 
         public DbSet<User> users { get; set; }
         public DbSet<Account> accounts { get; set; }
-        public DbSet<BankTransaction> bankTransactions { get; set; }
         public DbSet<Transfer> transfers { get; set; }
-        public DbSet<BankTransactionType> bankTransactionInfo { get; set; }
-        public DbSet<BankTransactionStatus> bankTransactionStatuses { get; set; }
         public DbSet<AccountType> accountInfo { get; set; }
         public DbSet<BankRole> bankRoles { get; set; }
 

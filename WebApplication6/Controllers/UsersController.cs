@@ -21,7 +21,7 @@ namespace WebApplication6.Controllers
             _Dbcontext = dbcontext;
         }
 
-        [Authorize] //256
+        [Authorize] //64
         [HttpGet("filter")]
         public IActionResult filter([FromQuery] FilterUsersDTO filterData)
         {
@@ -93,7 +93,7 @@ namespace WebApplication6.Controllers
                     email = toAddData.email,
                     phone = toAddData.phone,
                     createdAt = DateTime.Now,
-                    BankRole_id = toAddData.BankRole_id ?? (_Dbcontext.bankRoles.FirstOrDefault(r => r.roleName == nameof(bankRoleEnums.Customer))?.id ?? 1)
+                    BankRole_id = _Dbcontext.bankRoles.FirstOrDefault(r=>r.roleName == nameof(bankRoleEnums.Client))?.id ?? 1,
                 };
                 _Dbcontext.users.Add(user);
                 _Dbcontext.SaveChanges();
@@ -105,7 +105,7 @@ namespace WebApplication6.Controllers
             }
         }
 
-        [Authorize] //512
+        [Authorize] //128
         [HttpPut("update")]
         public IActionResult update([FromBody] UpdateUserDTO toUpdate)
         {
@@ -160,7 +160,7 @@ namespace WebApplication6.Controllers
             }
         }
 
-        [Authorize] //1024
+        [Authorize] //256
         [HttpDelete("delete")]
         public IActionResult delete([FromQuery] long id)
         {

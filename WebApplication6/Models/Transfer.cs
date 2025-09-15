@@ -7,13 +7,17 @@ namespace WebApplication6.Models
     {
         [Key]
         public int id { get; set; }
+        public long amount { get; set; }
+        public DateTime createdAt { get; set; }
+        public transactionTypesEnums TransactionType { get; set; }
+        public transactionStatusEnums transactionStatus { get; set; }
 
 
-        [ForeignKey("fromBankTransaction")]
-        public long? fromBankTransaction_id { get; set; }
-        public BankTransaction? fromBankTransaction { get; set; }
-        [ForeignKey("toBankTransaction")]
-        public long? toBankTransaction_id { get; set; }
-        public BankTransaction? toBankTransaction { get; set; }
+        [ForeignKey("fromAccount")]
+        public long? fromAccount_id { get; set; }
+        public Account? fromAccount { get; set; }
+        [ForeignKey("toAccount")]
+        public long? toAccount_id { get; set; }
+        public Account? toAccount { get; set; }
     }
 }

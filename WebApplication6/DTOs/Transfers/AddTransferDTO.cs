@@ -2,7 +2,9 @@
 {
     public class AddTransferDTO
     {
-        public long fromBankTransaction_id { get; set; }
-        public long toBankTransaction_id { get; set; }
+        public long amount { get; set; }
+        public transactionTypesEnums TransactionType { get; set; }
+        public long fromAccount_id { get; set; }
+        public long toAccount_id { get; set; }
     }
 }

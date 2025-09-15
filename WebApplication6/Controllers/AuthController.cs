@@ -40,7 +40,7 @@ namespace WebApplication6.Controllers
             {
                 new Claim(ClaimTypes.NameIdentifier, user.id.ToString()),
                 new Claim(ClaimTypes.Name, user.userName),
-                new Claim(ClaimTypes.Role, user.bankRole?.role.ToString() ?? nameof(bankRoleEnums.Customer))
+                new Claim(ClaimTypes.Role, user.bankRole?.role.ToString() ?? nameof(bankRoleEnums.Client))
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("mdkfa#&$(*1u8fhq(Q@(hfngoaoa892#*(@hufiai"));
