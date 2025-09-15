@@ -1,0 +1,1 @@
+﻿public enum BankRoleEnums { Admin = 1 , Manager = 2 , customer = 3 };

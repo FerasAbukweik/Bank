@@ -24,8 +24,7 @@ namespace WebApplication6
                 new BankTransactionType { id = 1, type = "Deposit" },
                 new BankTransactionType { id = 2, type = "Withdrawal" },
                 new BankTransactionType { id = 3, type = "Send" },
-                new BankTransactionType { id = 4, type = "Receive" }
-                );
+                new BankTransactionType { id = 4, type = "Receive" });
 
             modelBuilder.Entity<AccountType>().HasData(
                 new AccountType { id = 1, type = "Savings" },
@@ -33,6 +32,11 @@ namespace WebApplication6
                 new AccountType { id = 3, type = "Fixed_Deposit" },
                 new AccountType { id = 4, type = "Recurring_Deposit" },
                 new AccountType { id = 5, type = "NRI_Accounts" });
+
+            modelBuilder.Entity<BankRole>().HasData(
+                new BankRole { id = 1, role = "Admin" },
+                new BankRole { id = 2, role = "Manager" },
+                new BankRole { id = 3, role = "customer" });
         }
 
         public DbSet<User> users { get; set; }
@@ -42,6 +46,7 @@ namespace WebApplication6
         public DbSet<BankTransactionType> bankTransactionInfo { get; set; }
         public DbSet<BankTransactionStatus> bankTransactionStatuses { get; set; }
         public DbSet<AccountType> accountInfo { get; set; }
+        public DbSet<BankRole> bankRoles { get; set; }
 
     }
 }
