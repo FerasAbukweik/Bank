@@ -1,0 +1,24 @@
+    .card .latest-added {
+      margin: 5px 0 0 18px ;
+      font-size: 1rem;
+      color: green;
+      font-weight: 500;
+    }
+
+    .accounts-container{
+       flex: 1;
+       background: white;
+       border-radius: 1rem;
+       box-shadow: 0 0px 12px rgba(0, 0, 0, 0.1);
+       display: flex;
+       flex-direction: column;
+       margin-bottom: 50px ;
+       min-height: 300px;
+    }
+
+    .accounts-container .header{
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #444;
+      margin: 20px 0 0 20px ;
+    }

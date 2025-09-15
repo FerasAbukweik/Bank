@@ -1,0 +1,29 @@
+.main {
+  display: flex;
+  height: 100vh;
+}
+
+app-dashboard {
+  flex: 3;
+  display: flex;
+  flex-direction: column;
+}
+
+app-dashboard {
+  flex: 3;
+  display: flex;
+  flex-direction: column;
+}
+
+app-sidebar{
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  max-width: 300px;
+}
+    @media (max-width: 600px)
+    {
+        app-sidebar{
+        display: none;
+        }
+    }

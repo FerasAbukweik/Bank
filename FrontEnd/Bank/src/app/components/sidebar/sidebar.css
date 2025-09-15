@@ -1,0 +1,48 @@
+
+aside {
+  flex: 1;
+  background-color: #21354d;
+  color: #fff;
+  padding: 1.5rem 1rem;
+}
+
+.logo {
+  align-self: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+  font-weight: 400;
+}
+
+.logo-icon {
+  margin-right: 10px;
+}
+
+.menu {
+  flex: 1;
+}
+
+.menu ul {
+  list-style: none;
+}
+
+.menu ul li {
+  margin-top: 7px;
+  padding: 0.8rem 1rem;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.menu ul li:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.menu ul li.active {
+  background-color: #2b425e;
+  font-weight: bold;
+}
