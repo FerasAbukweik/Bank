@@ -1,0 +1,30 @@
+.form{
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+.transfer{
+    margin: 25px;
+}
+.text{
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #0a2540;
+}
+.input{
+    height: 45px;
+    border: 2px solid #DEE4E7;
+    border-radius: 0.4rem;
+    margin: 10px 0;
+    font-size: 20px;
+}
+.submet-button{
+    width: 140px;
+    height: 45px;
+    color: white;
+    background-color: #203A56;
+    border-radius: 0.5rem;
+    font-weight: normal;
+    align-self: flex-end;
+    margin-top: 8px ;
+}
