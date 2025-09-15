@@ -25,7 +25,7 @@ namespace WebApplication6.Controllers
         [HttpGet("filter")]
         public IActionResult filter([FromQuery] FilterUsersDTO filterData)
         {
-            if (Role != -1 && (Role & 256) != 256)
+            if (Role != -1 && (Role & (int)usersRoles.filter) != (int)usersRoles.filter)
             {
                 return BadRequest("User does not have permission to filter users");
             }
@@ -93,7 +93,7 @@ namespace WebApplication6.Controllers
                     email = toAddData.email,
                     phone = toAddData.phone,
                     createdAt = DateTime.Now,
-                    BankRole_id = toAddData.BankRole_id ?? (_Dbcontext.bankRoles.FirstOrDefault(r => r.roleName == nameof(BankRoleEnums.Customer))?.id ?? 1)
+                    BankRole_id = toAddData.BankRole_id ?? (_Dbcontext.bankRoles.FirstOrDefault(r => r.roleName == nameof(bankRoleEnums.Customer))?.id ?? 1)
                 };
                 _Dbcontext.users.Add(user);
                 _Dbcontext.SaveChanges();
@@ -109,7 +109,7 @@ namespace WebApplication6.Controllers
         [HttpPut("update")]
         public IActionResult update([FromBody] UpdateUserDTO toUpdate)
         {
-            if (Role != -1 && !((Role & 512) == 512 && UserId == toUpdate.id))
+            if (Role != -1 && !((Role & (int)usersRoles.update) == (int)usersRoles.update && UserId == toUpdate.id))
             {
                 return BadRequest("User does not have permission to update this user");
             }
@@ -164,7 +164,7 @@ namespace WebApplication6.Controllers
         [HttpDelete("delete")]
         public IActionResult delete([FromQuery] long id)
         {
-            if (Role != -1 && !((Role & 1024) == 1024 && UserId == id))
+            if (Role != -1 && !((Role & (int)usersRoles.delete) == (int)usersRoles.delete && UserId == id))
             {
                 return BadRequest("User does not have permission to delete this user");
             }

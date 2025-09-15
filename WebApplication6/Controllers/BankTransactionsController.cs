@@ -23,7 +23,7 @@ namespace WebApplication6.Controllers
         [HttpPost("add")] //16
         public IActionResult add([FromBody] AddBankTransactionDTO toAdd)
         {
-            if (Role != -1 && !((Role & 16) == 16 && UserId == toAdd.account_id))
+            if (Role != -1 && !((Role & (int)transactionRoles.add) == (int)transactionRoles.add && UserId == toAdd.account_id))
             {
                 return BadRequest("User does not have permission to add this transaction");
             }
@@ -50,7 +50,7 @@ namespace WebApplication6.Controllers
         [HttpGet("filter")] //32
         public IActionResult filter([FromQuery] FilterBankTransactionsDTO filterData)
         {
-            if (Role != -1 && (Role & 32) != 32)
+            if (Role != -1 && (Role & (int)transactionRoles.filter) != (int)transactionRoles.filter)
             {
                 return BadRequest("User does not have permission to access transactions");
             }

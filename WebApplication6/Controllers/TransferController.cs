@@ -35,7 +35,7 @@ namespace WebApplication6.Controllers
             var fromUser = _dbcontext.accounts.FirstOrDefault(a => a.id == fromTransaction.account_id && a.user_id == tokenId);
             var toUser = _dbcontext.accounts.FirstOrDefault(a => a.id == toTransaction.account_id && a.user_id == tokenId);
 
-            if (Role != -1 && !((Role & 64) == 64 && (fromUser != null || toUser != null)))
+            if (Role != -1 && !((Role & (int)transferRoles.add) == (int)transferRoles.add && (fromUser != null || toUser != null)))
             {
                 return BadRequest("User does not have permission for this operation");
             }
@@ -60,7 +60,7 @@ namespace WebApplication6.Controllers
         [HttpGet("filter")] //128
         public IActionResult filter([FromQuery] FilterTransferDTO filterData)
         {
-            if (Role != -1 && (Role & 128) != 128)
+            if (Role != -1 && (Role & (int)transferRoles.filter) != (int)transferRoles.filter)
             {
                 return BadRequest("User does not have permission to access this data");
             }

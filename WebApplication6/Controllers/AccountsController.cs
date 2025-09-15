@@ -26,7 +26,7 @@ namespace WebApplication6.Controllers
         public IActionResult add([FromBody] AddAccountDTO toAddData)
         {
 
-            if (role != -1 && !((role & 1) == 1 && userId == toAddData.user_id))
+            if (role != -1 && !((role & (int)accountRoles.add) == (int)accountRoles.add && userId == toAddData.user_id))
             {
                 return BadRequest("Unauthorized");
             }
@@ -53,7 +53,7 @@ namespace WebApplication6.Controllers
         public IActionResult filter([FromQuery] FilterAccountsDTO filterData)
         {
 
-            if (role != -1 && (role & 2) != 2)
+            if (role != -1 && (role & (int)accountRoles.filter) != (int)accountRoles.filter)
             {
                 return BadRequest("Unauthorized");
             }
@@ -95,7 +95,7 @@ namespace WebApplication6.Controllers
         public IActionResult update([FromBody] UpdateAccountDTO toUpdate)
         {
 
-            if (role != -1 && !((role & 4) == 4 && userId == toUpdate.user_id))
+            if (role != -1 && !((role & (int)accountRoles.update) == (int)accountRoles.update && userId == toUpdate.user_id))
             {
                 return BadRequest("Unauthorized");
             }
@@ -130,7 +130,7 @@ namespace WebApplication6.Controllers
         public IActionResult delete(long id)
         {
 
-            if (role != -1 && !((role & 8) == 8 && userId == id))
+            if (role != -1 && !((role & (int)accountRoles.delete) == (int)accountRoles.delete && userId == id))
             {
                 return BadRequest("Unauthorized");
             }

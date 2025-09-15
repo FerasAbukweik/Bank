@@ -19,7 +19,7 @@ namespace WebApplication6.Controllers
             _dbcontext = dbcontext;
         }
 
-
+        [Authorize(Roles = "-1")]
         [HttpGet("GetAll")]
         public IActionResult Getall()
         {
@@ -40,6 +40,7 @@ namespace WebApplication6.Controllers
             }
         }
 
+        [Authorize(Roles = "-1")]
         [HttpPost("Add")]
         public IActionResult add([FromBody]AddRoleDTO toAdd)
         {
@@ -74,6 +75,7 @@ namespace WebApplication6.Controllers
             }
         }
 
+        [Authorize(Roles = "-1")]
         [HttpPut("update")]
         public IActionResult update([FromBody] UpdateBankRoleDTO toUpdate)
         {
@@ -97,6 +99,7 @@ namespace WebApplication6.Controllers
             }
         }
 
+        [Authorize(Roles = "-1")]
         [HttpDelete("delete")]
         public IActionResult delete(long id)
         {
