@@ -3,7 +3,7 @@
   height: 100vh;
 }
 
-app-dashboard , app-accounts , app-transfer {
+app-dashboard , app-accounts , app-transfer , app-transactions{
   flex: 3;
   display: flex;
   flex-direction: column;

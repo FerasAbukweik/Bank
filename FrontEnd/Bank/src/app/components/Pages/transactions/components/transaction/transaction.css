@@ -1,0 +1,21 @@
+.row{
+    flex: 1;
+    padding: 40px 20px;
+    display: flex;
+}
+.expense{
+    flex: 1;
+    font-size: 20px;
+    font-weight: bold;
+}
+.date{
+    margin: 0 30px 0 10px;
+    font-size: 20px;
+}
+.amount{
+    font-size: 20px;
+    font-weight: bold;
+}
+.amount-p{
+    color: #00C260;
+}

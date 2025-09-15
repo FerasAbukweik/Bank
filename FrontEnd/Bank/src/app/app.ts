@@ -4,10 +4,11 @@ import { Sidebar } from './components/sidebar/sidebar';
 import { Dashboard } from './components/Pages/dashboard/dashboard';
 import { Accounts } from './components/Pages/accounts/accounts';
 import { Transfer } from './components/Pages/transfer/transfer';
+import { Transactions } from './components/Pages/transactions/transactions';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet , Sidebar , Dashboard ,Accounts , Transfer],
+  imports: [RouterOutlet , Sidebar , Dashboard ,Accounts , Transfer , Transactions],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })

@@ -1,0 +1,9 @@
+.card.container{
+    min-height: 50px;
+}
+.transactions{
+    margin: 25px;
+}
+hr {
+    border: 1px solid #f1f1f1;
+}
