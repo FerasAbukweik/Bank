@@ -1,0 +1,11 @@
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-name-gmail',
+  imports: [],
+  templateUrl: './name-gmail.html',
+  styleUrl: './name-gmail.css'
+})
+export class NameGmail {
+
+}

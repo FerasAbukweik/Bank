@@ -26,6 +26,31 @@
   box-shadow: 0 0px 12px rgba(0, 0, 0, 0.1);
 }
 
+.text{
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #0a2540;
+}
+
+.white-button{
+    background-color: #f6f8f9;
+    border: none;
+    width: 130px;
+    height: 45px;
+    border-radius: 0.45rem;
+}
+
+.lignt-blue-button{
+    width: 140px;
+    height: 45px;
+    color: white;
+    background-color: #203A56;
+    border-radius: 0.5rem;
+    font-weight: normal;
+    align-self: flex-end;
+    margin-top: 8px ;
+}
+
 .title{
     font-size: 2rem;
     font-weight: bold;
