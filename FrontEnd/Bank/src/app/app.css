@@ -12,6 +12,23 @@ app-transactions , app-profile-settings
   overflow-y: scroll;
 }
 
+.fa-solid.fa-solid.fa-bars{
+  color: #7084a3;
+  font-size: 20px;
+}
+.menu-icon{
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding: 10px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.menu-icon:hover{
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
 app-sidebar{
   flex: 1;
   display: flex;

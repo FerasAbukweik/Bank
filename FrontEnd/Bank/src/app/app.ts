@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, ElementRef, signal, ViewChild } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Sidebar } from './components/sidebar/sidebar';
 import { Dashboard } from './components/Pages/dashboard/dashboard';
@@ -15,4 +15,12 @@ import { ProfileSettings } from './components/Pages/profile-settings/profile-set
 })
 export class App {
   protected readonly title = signal('Bank');
+
+  @ViewChild("sideBar") sideBar : ElementRef | undefined;
+
+  isVisible = false;
+
+  ngAfterViewInit() {
+    this.isVisible = getComputedStyle(this.sideBar?.nativeElement).display !== "none";
+  }
 }

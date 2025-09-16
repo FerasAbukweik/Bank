@@ -152,5 +152,24 @@ namespace WebApplication6.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpGet("getTotalBalance")]
+        public IActionResult getTotalBalance(long id)
+        {
+            try
+            {
+                long totalSum = 0;
+                foreach (var account in _dbcontext.accounts)
+                {
+                    totalSum += account.balance;
+                }
+                return Ok(totalSum);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
     }
 }

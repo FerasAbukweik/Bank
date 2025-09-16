@@ -36,11 +36,12 @@ namespace WebApplication6.Controllers
 
         private string generateJWTToken(User user)
         {
+            int userRole = _dbcontext.bankRoles.FirstOrDefault(r => r.id == user.BankRole_id)?.role ?? 0;
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.NameIdentifier, user.id.ToString()),
                 new Claim(ClaimTypes.Name, user.userName),
-                new Claim(ClaimTypes.Role, user.bankRole?.role.ToString() ?? nameof(bankRoleEnums.Client))
+                new Claim(ClaimTypes.Role, userRole.ToString())
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("mdkfa#&$(*1u8fhq(Q@(hfngoaoa892#*(@hufiai"));
