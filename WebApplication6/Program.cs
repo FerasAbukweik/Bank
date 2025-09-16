@@ -26,6 +26,16 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAngular", builder =>
+    {
+        builder.AllowAnyOrigin()
+        .AllowAnyHeader()
+        .AllowAnyMethod();
+    });
+});
+
 builder.Services.AddDbContext<DBcontext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("Bank")));
 var app = builder.Build();
 
@@ -35,6 +45,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors("AllowAngular");
 
 app.UseHttpsRedirection();
 

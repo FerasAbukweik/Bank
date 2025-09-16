@@ -33,7 +33,7 @@ namespace WebApplication6
         public DbSet<User> users { get; set; }
         public DbSet<Account> accounts { get; set; }
         public DbSet<Transfer> transfers { get; set; }
-        public DbSet<AccountType> accountInfo { get; set; }
+        public DbSet<AccountType> accountTypes { get; set; }
         public DbSet<BankRole> bankRoles { get; set; }
 
     }

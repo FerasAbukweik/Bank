@@ -14,13 +14,5 @@ import { ProfileSettings } from './components/Pages/profile-settings/profile-set
   styleUrl: './app.css'
 })
 export class App {
-  protected readonly title = signal('Bank');
 
-  @ViewChild("sideBar") sideBar : ElementRef | undefined;
-
-  isVisible = false;
-
-  ngAfterViewInit() {
-    this.isVisible = getComputedStyle(this.sideBar?.nativeElement).display !== "none";
-  }
 }

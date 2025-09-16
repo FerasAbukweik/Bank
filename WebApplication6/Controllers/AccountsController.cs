@@ -8,7 +8,7 @@ using WebApplication6.Models;
 
 namespace WebApplication6.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class AccountsController : ControllerBase
@@ -164,6 +164,25 @@ namespace WebApplication6.Controllers
                     totalSum += account.balance;
                 }
                 return Ok(totalSum);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpGet("getDashboardAccounts")]
+        public IActionResult getDashboardAccounts(long userId)
+        {
+            try
+            {
+                var foundAccounts = from account in _dbcontext.accounts.Where(a => a.user_id == userId)
+                                    from accountType in _dbcontext.accountTypes.Where(t => t.id == account.accountType_id)
+                                    select new returnDashboardAccounts
+                                    {
+                                        type = accountType.type,
+                                        balance = account.balance
+                                    };
+                return Ok(foundAccounts);
             }
             catch (Exception ex)
             {

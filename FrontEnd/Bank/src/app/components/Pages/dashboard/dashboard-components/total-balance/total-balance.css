@@ -4,3 +4,7 @@
       color: green;
       font-weight: 500;
     }
+
+    .redColor{
+      color: red !important;
+    }

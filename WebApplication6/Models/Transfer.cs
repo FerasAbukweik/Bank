@@ -19,5 +19,12 @@ namespace WebApplication6.Models
         [ForeignKey("toAccount")]
         public long? toAccount_id { get; set; }
         public Account? toAccount { get; set; }
+        [ForeignKey("fromUser")]
+        public long? fromUserId { get; set; }
+        public User? fromUser { get; set; }
+        [ForeignKey("toUser")]
+        public long? toUserId { get; set; }
+        public User? toUser { get; set; }
+
     }
 }

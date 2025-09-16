@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { TransfersServices } from '../../../../../services/transfers-services/transfers-services';
+import { RecentActivitie } from '../../../../../interfaces/transfers/recentActivities';
 
 @Component({
   selector: 'app-recent-activities',
@@ -7,5 +9,5 @@ import { Component } from '@angular/core';
   styleUrl: './recent-activities.css'
 })
 export class RecentActivities {
-
+ @Input() recentActivities : RecentActivitie[] | undefined;
 }
