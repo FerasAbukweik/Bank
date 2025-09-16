@@ -1,10 +1,13 @@
 <div class="card container large-card">
     <span class="container-text-header">Accounts</span>
+    <div class="accounts">
       @for(account of dashboard_Accounts ; track account)
       {
-        <div class="account-row">
-          <span class="type">{{account.type}}</span>
-          <span class="amount">{{account.balance}}</span>
-        </div>
+        <hr>
+         <div class="account-row">
+           <span class="type">{{account.type}}</span>
+          <span class="amount">${{account.balance}}</span>
+         </div>
       }
+      </div>
   </div>

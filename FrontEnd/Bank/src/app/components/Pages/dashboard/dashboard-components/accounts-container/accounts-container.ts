@@ -25,7 +25,7 @@ this._accountsService.getDashboardAccounts(userId).subscribe({
     ret.forEach((account : any) =>{
       let toAdd : dashboardAccounts = {
         type : account.type,
-        balance : account.account
+        balance : account.balance
       }
 
         this.dashboard_Accounts.push(toAdd);

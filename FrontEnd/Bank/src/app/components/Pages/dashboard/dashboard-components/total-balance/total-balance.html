@@ -2,6 +2,6 @@
     <span class="container-text-header">Total Balance</span>
     <span class="body">${{totalBalance}}</span>
     <span class="latest-added" [class.redColor]="!lastTransfer?.deposit">
-      {{lastTransfer?.deposit ? '↑' : '↓'}}${{lastTransfer?.amount ?? 0}}
+      {{lastTransfer?.deposit ? '↑' : '↓'}} ${{lastTransfer?.amount ?? 0}}
     </span>
   </div>

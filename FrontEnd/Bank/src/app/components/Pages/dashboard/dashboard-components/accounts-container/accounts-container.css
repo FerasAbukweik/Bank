@@ -1,3 +1,14 @@
+.accounts{
+padding: 20px;
+}
+.account-row{
+  display: flex;
+justify-content: space-between;
+justify-content: space-between;
+padding: 20px;
+font-size: 1.4rem;
+}
+    
     .card .latest-added {
       margin: 5px 0 0 18px ;
       font-size: 1rem;

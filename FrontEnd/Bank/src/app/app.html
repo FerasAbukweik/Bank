@@ -1,7 +1,7 @@
 <div class="main">
-    <div class="menu-icon">
+    <div class="menu-icon" (click)="toggleSideBar()">
       <i class="fa-solid fa-bars"></i>
     </div>
-<app-sidebar></app-sidebar>
+<app-sidebar [class.hideSideBar]="sideBarState"></app-sidebar>
 <app-dashboard></app-dashboard>
 </div>
