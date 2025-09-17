@@ -5,10 +5,11 @@ import { FormGroup , FormControl , ReactiveFormsModule, Validators } from '@angu
 import { TransfersServices } from '../../../../../services/transfers-services/transfers-services';
 import { AddTransaction } from '../../../../../interfaces/transfers/AddTransaction';
 import { transactionTypesEnums } from '../../../../../enums/transfers';
+import { Message } from "../../../../message/message";
 
 @Component({
   selector: 'app-transfare-menu',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, Message],
   templateUrl: './transfare-menu.html',
   styleUrl: './transfare-menu.css'
 })
@@ -68,32 +69,35 @@ if(this.transferData.value.amount <=0)
 }
 
 let currAccountIndex : number = this.transferData.value.from;
-let toUserId! : number;
+let toUserId : number | null = null;
 let toAccountId : number = this.transferData.value.to;
 
 this._accountsServices.getUserIdFromAccountId(toAccountId).subscribe({
-  next : (ret : any)=>{
-    toUserId = ret;
+  next : (ret : any)=> {
+    let toUserId = ret;
+
+    let toAdd_Transfer : AddTransaction = {
+      amount : this.transferData.value.amount,
+      transactionType : transactionTypesEnums.send,
+      fromAccount_id : this.accounts[currAccountIndex].id,
+      toAccount_id : toAccountId,
+      fromUserId : 2,
+      toUserId : toUserId
+    };
+
+    this._transferServices.postAddTransfer(toAdd_Transfer).subscribe({
+      next : ()=> {window.location.reload()},
+      error : (err)=> {
+        this.message = err.error?.message ?? err.error ?? "Unexpected Error";
+        this.showMessage = true;
+      }
+    });
+
   },
-  error : (err)=>{
-    console.log(err.error?.message ?? err.error ?? "Unexpected Error");
+  error : (err)=> {
+    this.message = err.error?.message ?? err.error ?? "Unexpected Error";
+    this.showMessage = true;
   }
 })
-
-let toAdd_Transfer : AddTransaction = {
-  amount : this.transferData.value.amount,
-  transactionType : transactionTypesEnums.send,
-  fromAccount_id : this.accounts[currAccountIndex].id,
-  toAccount_id : toAccountId,
-  fromUserId : 2,
-  toUserId : toUserId
-};
-
-this._transferServices.postAddTransfer(toAdd_Transfer).subscribe({
-  error : (err)=>{
-    console.log(err.error?.message ?? err.error ?? "Unexpected Error");
-  }
-
-})}
-
+}
 }

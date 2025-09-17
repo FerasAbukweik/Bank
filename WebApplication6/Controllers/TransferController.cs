@@ -33,6 +33,12 @@ namespace WebApplication6.Controllers
 
             try
             {
+                if(toAdd.toAccount_id != null && toAdd.toUserId == null || toAdd.toAccount_id == null && toAdd.toUserId != null ||
+                    toAdd.fromAccount_id != null && toAdd.fromUserId == null || toAdd.fromAccount_id == null && toAdd.fromUserId != null)
+                {
+                    return BadRequest("Missing Id Or No Account With That Id");
+                }
+
                 var from_Account = toAdd.fromAccount_id.HasValue
                     ? _dbcontext.accounts.FirstOrDefault(a => a.id == toAdd.fromAccount_id)
                     : null;
@@ -41,15 +47,22 @@ namespace WebApplication6.Controllers
                     ? _dbcontext.accounts.FirstOrDefault(a => a.id == toAdd.toAccount_id)
                     : null;
 
+                if(from_Account!=null && from_Account.user_id != toAdd.fromUserId ||
+                    to_Account != null && to_Account.user_id != toAdd.toUserId)
+                {
+                    return BadRequest("user_Id Account_Id Don't Match");
+                }
+
+
                 if (toAdd.TransactionType == transactionTypesEnums.Withdrawal)
                 {
-                    if (from_Account == null) return BadRequest("fromAccount does not exist");
+                    if (from_Account == null) return BadRequest("from Account does not exist");
                     if (from_Account.balance < toAdd.amount) return BadRequest("Not enough balance");
                     from_Account.balance -= toAdd.amount;
                 }
                 else if (toAdd.TransactionType == transactionTypesEnums.Deposit)
                 {
-                    if (to_Account == null) return BadRequest("toAccount does not exist");
+                    if (to_Account == null) return BadRequest("to Account does not exist");
                     to_Account.balance += toAdd.amount;
                 }
                 else if (toAdd.TransactionType == transactionTypesEnums.Send)

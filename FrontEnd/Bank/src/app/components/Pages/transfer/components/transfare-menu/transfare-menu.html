@@ -18,8 +18,14 @@
     <input type="text" class="input" id="to" placeholder="Account Id" formControlName="to">
 
     <label for="amount" class="text">amount</label>
-    <input type="number" class="input" id="amount" placeholder="  $0" formControlName="amount">
+    <input type="number" class="input" id="amount" placeholder="$0" formControlName="amount">
     
     <button class="lignt-blue-button text" (click)="AddTransform()">Send</button>
 </form>
 </div>
+
+
+@if(showMessage)
+{
+    <app-message [message]="message" (showMessage)="showMessage = $event"></app-message>
+}

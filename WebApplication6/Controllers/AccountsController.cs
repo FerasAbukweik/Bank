@@ -196,8 +196,8 @@ namespace WebApplication6.Controllers
         {
             try
             {
-                var foundUser = _dbcontext.accounts.FirstOrDefault(a => a.user_id == accountId);
-                return Ok(foundUser);
+                var foundUser = _dbcontext.accounts.FirstOrDefault(a => a.id == accountId);
+                return Ok(foundUser?.user_id ?? null);
             }
             catch (Exception ex)
             {
