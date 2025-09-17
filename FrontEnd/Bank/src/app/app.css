@@ -3,14 +3,6 @@
   height: 100vh;
 }
 
-app-dashboard , app-accounts , app-transfer , 
-app-transactions , app-profile-settings
-{
-  flex: 3;
-  display: flex;
-  flex-direction: column;
-  overflow-y: scroll;
-}
 
 .fa-solid.fa-solid.fa-bars{
   color: #7084a3;
@@ -23,7 +15,7 @@ app-transactions , app-profile-settings
   padding: 10px;
   cursor: pointer;
   transition: background-color 0.2s;
-  z-index: 1;
+  z-index: 2;
 }
 
 .menu-icon:hover{
@@ -35,11 +27,13 @@ app-sidebar {
   display: flex;
   flex-direction: column;
   max-width: 300px;
+  transition: transform 0.2s ease;
+  z-index: 1;
 }
 
 
 .hideSideBar {
-  display: none ;
+display: none;
 }
 
 

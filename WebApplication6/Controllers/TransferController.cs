@@ -23,68 +23,81 @@ namespace WebApplication6.Controllers
         }
 
         [HttpPost("add")] //16
-        public IActionResult add([FromBody] AddTransferDTO toAdd)
+        public IActionResult Add([FromBody] AddTransferDTO toAdd)
         {
-            if (tokenRole != -1 && !((tokenRole & (int)transferRoles.add) == (int)transferRoles.add && (toAdd.fromUserId == tokenUserId)))
-            {
-                return BadRequest("User does not have permission for this operation");
-            }
+
+            //if (tokenRole != -1 && !((tokenRole & (int)transferRoles.add) == (int)transferRoles.add && (toAdd.fromUserId == tokenUserId))) 
+            //{ 
+            // return BadRequest("User does not have permission for this operation"); 
+            //}
 
             try
             {
-                var from_Account = _dbcontext.accounts.FirstOrDefault(a => a.id == toAdd.fromAccount_id);
-                var to_Account = _dbcontext.accounts.FirstOrDefault(a => a.id == toAdd.toAccount_id);
-                if(to_Account == from_Account) {return BadRequest("Cannt Send Money To The Same Account");}
+                var from_Account = toAdd.fromAccount_id.HasValue
+                    ? _dbcontext.accounts.FirstOrDefault(a => a.id == toAdd.fromAccount_id)
+                    : null;
+
+                var to_Account = toAdd.toAccount_id.HasValue
+                    ? _dbcontext.accounts.FirstOrDefault(a => a.id == toAdd.toAccount_id)
+                    : null;
 
                 if (toAdd.TransactionType == transactionTypesEnums.Withdrawal)
                 {
-                    if(from_Account == null) {return BadRequest("fromAccount Doesnt Exist");}
+                    if (from_Account == null) return BadRequest("fromAccount does not exist");
+                    if (from_Account.balance < toAdd.amount) return BadRequest("Not enough balance");
                     from_Account.balance -= toAdd.amount;
                 }
-
-                else if(toAdd.TransactionType == transactionTypesEnums.Deposit)
+                else if (toAdd.TransactionType == transactionTypesEnums.Deposit)
                 {
-                    if (to_Account == null) { return BadRequest("fromAccount Doesnt Exist"); }
+                    if (to_Account == null) return BadRequest("toAccount does not exist");
                     to_Account.balance += toAdd.amount;
                 }
-
-                else if (to_Account == null) {return BadRequest("to Account Doesnt Exist");}
-                else if(from_Account == null) {return BadRequest("from Account Doesnt Exist");}
-                
-                else if(toAdd.TransactionType == transactionTypesEnums.send)
+                else if (toAdd.TransactionType == transactionTypesEnums.Send)
                 {
+                    if (from_Account == null || to_Account == null)
+                        return BadRequest("Accounts do not exist");
+                    if (from_Account.balance < toAdd.amount)
+                        return BadRequest("Not enough balance");
                     from_Account.balance -= toAdd.amount;
                     to_Account.balance += toAdd.amount;
                 }
-                    Transfer transfer = new Transfer
-                    {
-                        amount = toAdd.amount,
-                        createdAt = DateTime.Now,
-                        TransactionType = toAdd.TransactionType,
-                        transactionStatus = transactionStatusEnums.Pending,
-                        fromAccount_id = toAdd.fromAccount_id,
-                        toAccount_id = toAdd.toAccount_id,
-                        fromUserId = toAdd.fromUserId,
-                        toUserId = toAdd.toUserId
-                    };
+                else
+                {
+                    return BadRequest("Invalid transaction type");
+                }
+
+                var transfer = new Transfer
+                {
+                    amount = toAdd.amount,
+                    createdAt = DateTime.Now,
+                    TransactionType = toAdd.TransactionType,
+                    transactionStatus = transactionStatusEnums.Pending,
+                    fromAccount_id = toAdd.fromAccount_id,
+                    toAccount_id = toAdd.toAccount_id,
+                    fromUserId = toAdd.fromUserId,
+                    toUserId = toAdd.toUserId
+                };
+
                 _dbcontext.Add(transfer);
                 _dbcontext.SaveChanges();
+
                 return Ok();
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(ex.InnerException?.Message ?? ex.Message);
             }
         }
+
 
         [HttpGet("filter")] //32
         public IActionResult filter([FromQuery] FilterTransferDTO filterData)
         {
-            if (tokenRole != -1 &&
-                !((tokenRole & (int)transferRoles.filter) == (int)transferRoles.filter && (filterData.fromUserId == tokenUserId || filterData.toUserId == tokenUserId)))
-            {
-                return BadRequest("User does not have permission for this operation");
-            }
+            //if (tokenRole != -1 &&
+            //    !((tokenRole & (int)transferRoles.filter) == (int)transferRoles.filter && (filterData.fromUserId == tokenUserId || filterData.toUserId == tokenUserId)))
+            //{
+            //    return BadRequest("User does not have permission for this operation");
+            //}
 
             try
             {
@@ -148,7 +161,7 @@ namespace WebApplication6.Controllers
                 var foundActivities = from account in _dbcontext.accounts.Where(a => a.user_id == userId)
                                       from transfer in _dbcontext.transfers.Where(t => (t.fromAccount_id == account.id) ||
                                       (t.toAccount_id == account.id))
-                                      orderby transfer.id
+                                      orderby transfer.id descending
                                       select new returnRecentActivities
                                       {
                                           id = transfer.id,

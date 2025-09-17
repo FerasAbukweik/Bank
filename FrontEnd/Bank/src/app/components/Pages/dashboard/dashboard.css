@@ -1,9 +1,11 @@
-.dashboard{
-    flex: 1;
-    display: flex;
-    flex-direction: column;
+:host{
+  flex: 3;
+  overflow-y: scroll;
 }
-
+.dashboard{
+  display: flex;
+  flex-direction: column;
+}
 .containers-row {
   display: flex;
   justify-content: start;

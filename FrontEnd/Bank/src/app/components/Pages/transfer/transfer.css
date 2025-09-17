@@ -1,4 +1,7 @@
-
+:host{
+  flex: 3;
+  overflow-y: scroll;
+}
 .transfer{
     margin: 25px;
 }

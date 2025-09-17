@@ -6,11 +6,11 @@
 
   <nav class="menu">
     <ul>
-      <li class="active">Dashboard</li>
-      <li>Accounts</li>
-      <li>Transfers</li>
-      <li>Transactions</li>
-      <li>Profile / Settings</li>
+      <li [class.active]="currSideBarTile == 1" [routerLink]='"/dashBoard"' (click)="changeTile(1)">Dashboard</li>
+      <li [class.active]="currSideBarTile == 2" [routerLink]='"/accounts"' (click)="changeTile(2)">Accounts</li>
+      <li [class.active]="currSideBarTile == 3" [routerLink]='"/transfers"' (click)="changeTile(3)">Transfers</li>
+      <li [class.active]="currSideBarTile == 4" [routerLink]='"/transactions"' (click)="changeTile(4)">Transactions</li>
+      <li [class.active]="currSideBarTile == 5" [routerLink]='"/profile-settings"' (click)="changeTile(5)">Profile / Settings</li>
     </ul>
   </nav>
 </aside>

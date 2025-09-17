@@ -1,8 +1,17 @@
  <div class="account-container">
-        <span class="container-text-header">type</span>
+        <span class="container-text-header">{{account.type}}</span>
         <div class="row">
-            <span class="balance">$0</span>
-            <button class="white-button">Deposit</button>
-            <button class="white-button">Withdraw</button>
+            <span class="balance">${{account.balance}}</span>
+            <button class="white-button" (click)="openDialog('Deposit')"> Deposit </button>
+            <button class="white-button" (click)="openDialog('Withdraw')">Withdraw</button>
         </div>
+
+    @if(messageModal.showModal)
+    {
+        <app-confirmation-modal [modalData]="ModalData" (message_modal)="messageModal = $event"></app-confirmation-modal>
+    }
+    @if (messageModal.showMessage)
+    {
+        <app-message [message]="messageModal.message" (showMessage)="messageModal.showMessage = $event"></app-message>
+    }
 </div>

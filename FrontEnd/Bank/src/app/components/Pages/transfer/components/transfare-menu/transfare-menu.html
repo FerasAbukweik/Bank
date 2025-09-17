@@ -1,18 +1,25 @@
 <div class="card container large-card">
 
-<form action="post" class="form">
+<form action="post" class="form" [formGroup]="transferData">
 
     <label for="from" class="text">From</label>
-    <select id="from" class="input">
-        <!-- Options -->
+    <select id="from" class="input" formControlName="from">
+        @for(account of accounts; track account; let i = $index)
+        {
+            <option value="{{i}}">
+                    <span class="type">{{account.type}}</span>
+                    <span class="balance"> . . . . Balance={{account.balance}}</span>
+                    <span class="id"> . . Id=>{{account.id}} </span>
+            </option>
+        }
     </select>
 
     <label for="to" class="text">To</label>
-    <input type="text" class="input" id="to">
+    <input type="text" class="input" id="to" placeholder="Account Id" formControlName="to">
 
     <label for="amount" class="text">amount</label>
-    <input type="number" class="input" id="amount" placeholder="  $0">
+    <input type="number" class="input" id="amount" placeholder="  $0" formControlName="amount">
     
-    <button class="lignt-blue-button text">Send</button>
+    <button class="lignt-blue-button text" (click)="AddTransform()">Send</button>
 </form>
 </div>

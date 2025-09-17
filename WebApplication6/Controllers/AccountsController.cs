@@ -177,12 +177,27 @@ namespace WebApplication6.Controllers
             {
                 var foundAccounts = from account in _dbcontext.accounts.Where(a => a.user_id == userId)
                                     from accountType in _dbcontext.accountTypes.Where(t => t.id == account.accountType_id)
-                                    select new returnDashboardAccounts
+                                    select new returnAccountsMinorData
                                     {
+                                        id = account.id,
                                         type = accountType.type,
                                         balance = account.balance
                                     };
                 return Ok(foundAccounts);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("getUserIdFromAccountId")]
+        public IActionResult getUserIdFromAccountId(long accountId)
+        {
+            try
+            {
+                var foundUser = _dbcontext.accounts.FirstOrDefault(a => a.user_id == accountId);
+                return Ok(foundUser);
             }
             catch (Exception ex)
             {

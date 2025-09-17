@@ -1,6 +1,7 @@
 <div class="accounts">
-    <span class="title">
-        Accounts
-    </span>
-   <app-account-container></app-account-container>
+    <span class="title">Accounts</span>
+    @for(account of accounts ;track account)
+    {
+        <app-account-container [account]="account"></app-account-container>
+    }
 </div>

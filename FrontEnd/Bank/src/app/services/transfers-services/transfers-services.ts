@@ -1,6 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { AddTransaction } from '../../interfaces/transfers/AddTransaction';
 
 @Injectable({
   providedIn: 'root'
@@ -12,15 +13,26 @@ constructor(private _http : HttpClient){}
 
 public getNumOfTransactions(userId : number){
 let params = new HttpParams();
-params = params.set("userId" , userId.toString())
+params = params.set("userId" , userId)
 return this._http.get(this.apiUrl + "/getNumberOfTransfers" , {params} );
 }
 
 public getRecentActivities(userId : number){
   let params = new HttpParams()
-  params = params.set("userId" , userId.toString());
-  return this._http.get(this.apiUrl + "/getRecentActivity" , {params})
+  params = params.set("userId" , userId);
+  return this._http.get(this.apiUrl + "/getRecentActivity" , {params});
 }
 
+
+public postAddTransfer(data: AddTransaction) {
+  return this._http.post(this.apiUrl + "/add", {
+    amount: data.amount,
+    transactionType: data.transactionType,
+    fromAccount_id: data.fromAccount_id ?? null,
+    toAccount_id: data.toAccount_id ?? null,
+    fromUserId: data.fromUserId ?? null,
+    toUserId: data.toUserId ?? null
+  });
+}
   
 }

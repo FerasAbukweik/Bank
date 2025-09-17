@@ -18,10 +18,17 @@ apiUrl : string = "https://localhost:44375/api/Accounts";
     return this._http.get(this.apiUrl + "/getTotalBalance" , {params});
   }
 
-  public getDashboardAccounts(userId : number)
+  public getAccountsMinorData(userId : number)
   {
     let params = new HttpParams();
     params = params.set("userId" , userId.toString());
     return this._http.get(this.apiUrl + "/getDashboardAccounts" , {params});
+  }
+
+  public getUserIdFromAccountId(accountId : number)
+  {
+    let params = new HttpParams();
+    params = params.set("accountId" , accountId);
+    return this._http.get(this.apiUrl + "/getUserIdFromAccountId" , {params});
   }
 }

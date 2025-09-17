@@ -1,0 +1,4 @@
+:host{
+  flex: 3;
+  overflow-y: scroll;
+}

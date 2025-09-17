@@ -4,7 +4,7 @@
       @for(activity of recentActivities; track activity)
       {
         <div class="activity">
-          <span class="amount">${{activity.amount}}</span>
+          <span class="amount" [class.redColor]="!activity.deposit">${{activity.amount}}</span>
           <div class="design">
           <span class="design1"></span>
           <span class="design2"></span>
