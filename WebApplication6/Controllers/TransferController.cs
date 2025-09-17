@@ -54,18 +54,18 @@ namespace WebApplication6.Controllers
                 }
 
 
-                if (toAdd.TransactionType == transactionTypesEnums.Withdrawal)
+                if (toAdd.TransactionType == transferTypesEnums.Withdrawal)
                 {
                     if (from_Account == null) return BadRequest("from Account does not exist");
                     if (from_Account.balance < toAdd.amount) return BadRequest("Not enough balance");
                     from_Account.balance -= toAdd.amount;
                 }
-                else if (toAdd.TransactionType == transactionTypesEnums.Deposit)
+                else if (toAdd.TransactionType == transferTypesEnums.Deposit)
                 {
                     if (to_Account == null) return BadRequest("to Account does not exist");
                     to_Account.balance += toAdd.amount;
                 }
-                else if (toAdd.TransactionType == transactionTypesEnums.Send)
+                else if (toAdd.TransactionType == transferTypesEnums.Send)
                 {
                     if (from_Account == null || to_Account == null)
                         return BadRequest("Accounts do not exist");
@@ -84,7 +84,6 @@ namespace WebApplication6.Controllers
                     amount = toAdd.amount,
                     createdAt = DateTime.Now,
                     TransactionType = toAdd.TransactionType,
-                    transactionStatus = transactionStatusEnums.Pending,
                     fromAccount_id = toAdd.fromAccount_id,
                     toAccount_id = toAdd.toAccount_id,
                     fromUserId = toAdd.fromUserId,
@@ -119,7 +118,6 @@ namespace WebApplication6.Controllers
                     (filterData.amount == null || filterData.amount == t.amount) &&
                     (filterData.createdAt == null || filterData.createdAt == t.createdAt) &&
                     (filterData.TransactionType == null || filterData.TransactionType == t.TransactionType) &&
-                    (filterData.transactionStatus == null || filterData.transactionStatus == t.transactionStatus) &&
                     (filterData.fromAccount_id == null || filterData.fromAccount_id == t.fromAccount_id) &&
                     (filterData.toAccount_id == null || filterData.toAccount_id == t.toAccount_id))
                                 orderby transfer.id descending
@@ -129,7 +127,6 @@ namespace WebApplication6.Controllers
                                     amount = transfer.amount,
                                     createdAt = transfer.createdAt,
                                     TransactionType = transfer.TransactionType,
-                                    transactionStatus = transfer.transactionStatus,
                                     fromAccount_id = transfer.fromAccount_id,
                                     toAccount_id = transfer.toAccount_id,
                                     fromUserId = transfer.fromUserId,

@@ -9,8 +9,7 @@ namespace WebApplication6.Models
         public int id { get; set; }
         public long amount { get; set; }
         public DateTime createdAt { get; set; }
-        public transactionTypesEnums TransactionType { get; set; }
-        public transactionStatusEnums transactionStatus { get; set; }
+        public transferTypesEnums TransactionType { get; set; }
 
 
         [ForeignKey("fromAccount")]
