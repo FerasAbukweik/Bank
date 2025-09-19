@@ -1,7 +1,13 @@
 <div class="accounts">
     <span class="title">Accounts</span>
+    <app-button (isClicked)="showAddAccount = $event" [buttonData]="buttonData"></app-button>
     @for(account of accounts ;track account)
     {
         <app-account-container [account]="account"></app-account-container>
     }
 </div>
+
+@if(showAddAccount)
+{
+<app-add-account-container (retData)="manageAddAccount($event)"></app-add-account-container>
+}

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { accountsMinorData } from "../../../../../interfaces/accounts/accountsMinorData";
+import { accountsMinorData } from "../../../../../interfaces/account/accountsMinorData";
 import { AccountsServices } from '../../../../../services/accounts-services/accounts-services';
 
 @Component({
@@ -14,7 +14,7 @@ dashboard_Accounts :  accountsMinorData[] = [];
 constructor(private _accountsService : AccountsServices) {}
 
 ngOnInit(): void {
-  this.updateDashboard_Accounts(2);
+  this.updateDashboard_Accounts(+localStorage.getItem("userId")!);
 }
 
 updateDashboard_Accounts(userId : number){

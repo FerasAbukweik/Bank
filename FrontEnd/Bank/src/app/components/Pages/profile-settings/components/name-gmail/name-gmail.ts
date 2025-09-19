@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-name-gmail',
@@ -6,6 +6,11 @@ import { Component } from '@angular/core';
   templateUrl: './name-gmail.html',
   styleUrl: './name-gmail.css'
 })
-export class NameGmail {
+export class NameGmail implements OnInit {
+@Input() userName! :string;
+@Input() email! : string;
 
+ngOnInit(): void {
+  
+}
 }

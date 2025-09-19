@@ -1,9 +1,12 @@
 <div class="main">
+  @if(showSideBar())
+  {
     <div class="menu-icon" (click)="toggleSideBar()">
       <i class="fa-solid fa-bars"></i>
     </div>
 <app-sidebar [class.hideSideBar]="sideBarState"
              (hide_SideBar)="sideBarState = $event">
             </app-sidebar>
+          }
 <router-outlet></router-outlet>
 </div>

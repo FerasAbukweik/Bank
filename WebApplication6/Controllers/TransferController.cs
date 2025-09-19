@@ -7,7 +7,7 @@ using WebApplication6.Models;
 
 namespace WebApplication6.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class TransferController : ControllerBase
@@ -15,7 +15,7 @@ namespace WebApplication6.Controllers
         private DBcontext _dbcontext;
 
         private int tokenRole => int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value ?? "0");
-        private long tokenUserId => int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value ?? "0");
+        private long tokenUserId => long.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value ?? "0");
 
         public TransferController(DBcontext dbcontext)
         {
@@ -26,10 +26,10 @@ namespace WebApplication6.Controllers
         public IActionResult Add([FromBody] AddTransferDTO toAdd)
         {
 
-            //if (tokenRole != -1 && !((tokenRole & (int)transferRoles.add) == (int)transferRoles.add && (toAdd.fromUserId == tokenUserId))) 
-            //{ 
-            // return BadRequest("User does not have permission for this operation"); 
-            //}
+            if (tokenRole != -1 && !((tokenRole & (int)transferRoles.add) == (int)transferRoles.add && (toAdd.fromUserId == tokenUserId)))
+            {
+                return BadRequest("Unauthorized");
+            }
 
             try
             {
@@ -53,8 +53,14 @@ namespace WebApplication6.Controllers
                     return BadRequest("user_Id Account_Id Don't Match");
                 }
 
+                if(from_Account == to_Account)
+                {
+                    if(to_Account == null) { return BadRequest("Account Cannt Be Null"); }
+                    return BadRequest("Can't Send Money To The Same Account");
+                }
 
-                if (toAdd.TransactionType == transferTypesEnums.Withdrawal)
+
+                if (toAdd.TransactionType == transferTypesEnums.Withdraw)
                 {
                     if (from_Account == null) return BadRequest("from Account does not exist");
                     if (from_Account.balance < toAdd.amount) return BadRequest("Not enough balance");
@@ -105,11 +111,11 @@ namespace WebApplication6.Controllers
         [HttpGet("filter")] //32
         public IActionResult filter([FromQuery] FilterTransferDTO filterData)
         {
-            //if (tokenRole != -1 &&
-            //    !((tokenRole & (int)transferRoles.filter) == (int)transferRoles.filter && (filterData.fromUserId == tokenUserId || filterData.toUserId == tokenUserId)))
-            //{
-            //    return BadRequest("User does not have permission for this operation");
-            //}
+            if (tokenRole != -1 &&
+                !((tokenRole & (int)transferRoles.filter) == (int)transferRoles.filter && (filterData.fromUserId == tokenUserId || filterData.toUserId == tokenUserId)))
+            {
+                return BadRequest("Unauthorized");
+            }
 
             try
             {
@@ -144,11 +150,11 @@ namespace WebApplication6.Controllers
         [HttpGet("getNumberOfTransfers")]
         public IActionResult getNumberOfTransfers(long userId)
         {
-            //if (tokenRole != -1 &&
-            //    !((tokenRole & (int)transferRoles.getNumberOfTransfers) == (int)transferRoles.getNumberOfTransfers && (userId == tokenUserId)))
-            //{
-            //    return BadRequest("User does not have permission for this operation");
-            //}
+            if (tokenRole != -1 &&
+                !((tokenRole & (int)transferRoles.getNumberOfTransfers) == (int)transferRoles.getNumberOfTransfers && (userId == tokenUserId)))
+            {
+                return BadRequest("Unauthorized");
+            }
             try
             {
                 long numOfTransfers = 0;
@@ -166,6 +172,12 @@ namespace WebApplication6.Controllers
         [HttpGet("getRecentActivity")]
         public IActionResult getRecentActivities(long userId)
         {
+            if (tokenRole != -1 &&
+                !((tokenRole & (int)transferRoles.getRecentActivity) == (int)transferRoles.getRecentActivity && (userId == tokenUserId)))
+            {
+                return BadRequest("Unauthorized");
+            }
+
             try
             {
                 var foundActivities = from account in _dbcontext.accounts.Where(a => a.user_id == userId)
@@ -176,9 +188,38 @@ namespace WebApplication6.Controllers
                                       {
                                           id = transfer.id,
                                           amount = transfer.amount,
-                                          deposit = account.id == transfer.toAccount_id,
+                                          isDeposit = account.id == transfer.toAccount_id,
                                       };
                 return Ok(foundActivities);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("getTransactions")]
+        public IActionResult getTransactions(long userId)
+        {
+            if (tokenRole != -1 &&
+                !((tokenRole & (int)transferRoles.getTransactions) == (int)transferRoles.getTransactions && (userId == tokenUserId)))
+            {
+                return BadRequest("Unauthorized");
+            }
+            try
+            {
+                var foundTransactions = from account in _dbcontext.accounts.Where(a => a.user_id == userId)
+                                        from transfer in _dbcontext.transfers.Where(t =>
+                                        (t.fromAccount_id == account.id || t.toAccount_id == account.id))
+                                        orderby transfer.id descending
+                                        select new ReturnTransactions
+                                        {
+                                            id = transfer.id,
+                                            amount = transfer.amount,
+                                            createdAt = transfer.createdAt,
+                                            TransactionType = transfer.TransactionType
+                                        };
+                return Ok(foundTransactions);
             }
             catch (Exception ex)
             {

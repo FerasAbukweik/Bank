@@ -1,11 +1,13 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using WebApplication6.DTOs.Auth;
+using WebApplication6.DTOs.Users;
 using WebApplication6.Models;
 
 namespace WebApplication6.Controllers
@@ -21,17 +23,18 @@ namespace WebApplication6.Controllers
             _dbcontext = dbcontext;
         }
 
-        [HttpPost("login")]
-        public IActionResult login([FromBody] LoginDTO loginData)
+        [HttpGet("login")]
+        public IActionResult login([FromQuery] LoginDTO loginData)
         {
-            User? user = _dbcontext.users.FirstOrDefault(u => u.userName == loginData.userName);
+            User? user = _dbcontext.users.Include(i=>i.bankRole).FirstOrDefault(u => u.userName == loginData.userName);
 
             if (user == null || !BCrypt.Net.BCrypt.Verify(loginData.Password, user.hashedPassword))
             {
                 return BadRequest("Wrong Input");
             }
 
-            return Ok(generateJWTToken(user));
+            return Ok(new RetToken{ token = generateJWTToken(user) , roleName = user.bankRole?.roleName ?? "no Role Name Found" , userId = user.id});
+
         }
 
         private string generateJWTToken(User user)

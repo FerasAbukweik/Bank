@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { accountsMinorData } from '../../../../../interfaces/accounts/accountsMinorData';
+import { accountsMinorData } from '../../../../../interfaces/account/accountsMinorData';
 import { AccountsServices } from '../../../../../services/accounts-services/accounts-services';
 import { FormGroup , FormControl , ReactiveFormsModule, Validators } from '@angular/forms';
 import { TransfersServices } from '../../../../../services/transfers-services/transfers-services';
-import { AddTransaction } from '../../../../../interfaces/transfers/AddTransaction';
+import { AddTransaction } from '../../../../../interfaces/transfer/AddTransaction';
 import { transactionTypesEnums } from '../../../../../enums/transfers';
 import { Message } from "../../../../message/message";
+import { min } from 'rxjs';
 
 @Component({
   selector: 'app-transfare-menu',
@@ -30,7 +31,7 @@ export class TransfareMenu implements OnInit{
   ){}
 
   ngOnInit(): void {
-    this.updateAccounts(2);
+    this.updateAccounts(+localStorage.getItem("userId")!);
   }
 updateAccounts(userId : number){
   this._accountsServices.getAccountsMinorData(userId).subscribe({
@@ -78,10 +79,10 @@ this._accountsServices.getUserIdFromAccountId(toAccountId).subscribe({
 
     let toAdd_Transfer : AddTransaction = {
       amount : this.transferData.value.amount,
-      transactionType : transactionTypesEnums.send,
+      transactionType : transactionTypesEnums.Send,
       fromAccount_id : this.accounts[currAccountIndex].id,
       toAccount_id : toAccountId,
-      fromUserId : 2,
+      fromUserId : +localStorage.getItem("userId")!,
       toUserId : toUserId
     };
 

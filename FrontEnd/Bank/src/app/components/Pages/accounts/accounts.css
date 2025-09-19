@@ -2,7 +2,13 @@
   flex: 3;
   overflow-y: scroll;
 }
-accounts{
+.accounts{
     display: flex;
     flex-direction: column;
+}
+
+app-button{
+  align-self: flex-end;
+  padding-right: 30px;
+  margin-bottom: 10px;
 }

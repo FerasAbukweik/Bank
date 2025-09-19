@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebApplication6.DTOs.Role;
+using WebApplication6.DTOs.Users;
 using WebApplication6.Models;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
@@ -19,7 +20,6 @@ namespace WebApplication6.Controllers
             _dbcontext = dbcontext;
         }
 
-        [Authorize(Roles = "-1")]
         [HttpGet("GetAll")]
         public IActionResult Getall()
         {
@@ -40,7 +40,6 @@ namespace WebApplication6.Controllers
             }
         }
 
-        [Authorize(Roles = "-1")]
         [HttpPost("Add")]
         public IActionResult add([FromBody]AddRoleDTO toAdd)
         {
@@ -75,7 +74,6 @@ namespace WebApplication6.Controllers
             }
         }
 
-        [Authorize(Roles = "-1")]
         [HttpPut("update")]
         public IActionResult update([FromBody] UpdateBankRoleDTO toUpdate)
         {
@@ -99,7 +97,6 @@ namespace WebApplication6.Controllers
             }
         }
 
-        [Authorize(Roles = "-1")]
         [HttpDelete("delete")]
         public IActionResult delete(long id)
         {
@@ -120,6 +117,28 @@ namespace WebApplication6.Controllers
                 return BadRequest(ex.Message);
             }
 
+        }
+
+        [HttpPut("updateRole")]
+        public IActionResult updateRole([FromBody] UpdateUserRoleDTO toUpdate)
+        {
+            try
+            {
+                User? user = _dbcontext.users.FirstOrDefault(u => u.id == toUpdate.id);
+
+                if (user == null)
+                {
+                    return BadRequest("User Not Found");
+                }
+
+                user.BankRole_id = toUpdate.bankRole_Id;
+                _dbcontext.SaveChanges();
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

@@ -2,7 +2,7 @@
 {
     public class FilterTransferDTO
     {
-        public int? id { get; set; }
+        public long? id { get; set; }
         public long? amount { get; set; }
         public DateTime? createdAt { get; set; }
         public transferTypesEnums? TransactionType { get; set; }

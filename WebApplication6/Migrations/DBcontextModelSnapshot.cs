@@ -118,7 +118,7 @@ namespace WebApplication6.Migrations
                         new
                         {
                             id = 1L,
-                            role = 447,
+                            role = 32703,
                             roleName = "Client"
                         },
                         new
@@ -131,11 +131,11 @@ namespace WebApplication6.Migrations
 
             modelBuilder.Entity("WebApplication6.Models.Transfer", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<long>("id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("id"));
 
                     b.Property<int>("TransactionType")
                         .HasColumnType("int");

@@ -1,1 +1,1 @@
-﻿public enum transferTypesEnums { Deposit = 1 , Withdrawal = 2 , Send = 3 }
+﻿public enum transferTypesEnums { Deposit = 1 , Withdraw = 2 , Send = 3 }

@@ -1,8 +1,6 @@
 import { Component , Input, OnInit } from '@angular/core';
-import { AccountsServices } from '../../../../../services/accounts-services/accounts-services';
-import { TransfersServices } from '../../../../../services/transfers-services/transfers-services';
-import { RecentActivities } from '../recent-activities/recent-activities';
-import { RecentActivitie } from '../../../../../interfaces/transfers/recentActivities';
+import { RecentActivitie } from '../../../../../interfaces/transfer/recentActivities';
+import { UsersServices } from '../../../../../services/users-services/users-services';
 
 @Component({
   selector: 'app-total-balance',
@@ -15,15 +13,15 @@ export class TotalBalance implements OnInit {
   @Input() lastTransfer : RecentActivitie |undefined;
 
 
-  constructor(private _accountService: AccountsServices,
+  constructor(private _usersServices: UsersServices,
   ) {}
 
   ngOnInit(): void {
-    this.getTotalBalance(2);
+    this.getTotalBalance(+localStorage.getItem("userId")!);
   }
 
   getTotalBalance(userId: number) {
-    this._accountService.getTotalBalance(userId).subscribe({
+    this._usersServices.getTotalBalance(userId).subscribe({
       next : (ret : any)=>{
         this.totalBalance = ret;
       },

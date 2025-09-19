@@ -1,1 +1,1 @@
-export enum transactionTypesEnums { Deposit = 1 , Withdrawal = 2 , send = 3 }
+export enum transactionTypesEnums { Deposit = 1 , Withdraw = 2 , Send = 3 }

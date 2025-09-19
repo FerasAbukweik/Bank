@@ -1,0 +1,13 @@
+.logo {
+  align-self: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  font-weight: bold;
+  font-weight: 400;
+}
+
+.logo-icon {
+  margin-right: 10px;
+}

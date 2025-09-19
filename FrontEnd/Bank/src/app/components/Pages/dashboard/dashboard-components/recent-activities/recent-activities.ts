@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { TransfersServices } from '../../../../../services/transfers-services/transfers-services';
-import { RecentActivitie } from '../../../../../interfaces/transfers/recentActivities';
+import { RecentActivitie } from '../../../../../interfaces/transfer/recentActivities';
 
 @Component({
   selector: 'app-recent-activities',

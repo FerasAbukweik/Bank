@@ -1,9 +1,10 @@
 <div class="transactions">
 <span class="title">Transactions</span>
 <div class="card container">
- <!-- transactions -->
-  <app-transaction></app-transaction>
-  <hr>
-  <app-transaction></app-transaction>
+ @for(transaction of transactions; track transaction ; let i = $index)
+ {
+  <app-transaction [transaction_data]="transaction"></app-transaction>
+    <hr>
+ }
 </div>
 </div>

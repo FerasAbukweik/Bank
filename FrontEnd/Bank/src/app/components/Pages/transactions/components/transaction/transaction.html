@@ -1,6 +1,5 @@
 <div class="transaction row">
-     <span class="date">date</span>
-    <span class="expense">expense</span>
-    <!-- amount-n for negative || amount-p for positive -->
-    <span class="amount amount-p">+$0</span>
+<span class="date">{{ transaction_data.createdAt | date:'hh:mm yyyy-MM-dd' }}</span>
+    <span class="expense">{{type}}</span>
+    <span class="amount" [class.amount-n]="isRed" [class.amount-p]="isGreen">${{transaction_data.amount}}</span>
 </div>

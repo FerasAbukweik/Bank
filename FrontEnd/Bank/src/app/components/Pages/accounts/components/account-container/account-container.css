@@ -5,21 +5,33 @@
     background-color: white;
     border-radius: 1rem;
     box-shadow: 0 0px 12px rgba(0, 0, 0, 0.1);
-    margin: 25px;
+    margin: 10px 25px;
+    padding: 20px;
     
 }
 .container-text-header{
     flex: 1;
+    margin: 0;
+}
+
+.header-row , .row{
+display: flex;
+}
+
+.header-row{
+    flex: 1;
 }
 
 .row{
-        display: flex;
-        gap: 10px;
-        margin-bottom: 30px;
-        margin: 25px;
+    gap: 10px;
 }
+
 .balance{
     flex: 1;
     font-size: 35px;
     font-weight: bold;
+}
+
+app-button{
+
 }

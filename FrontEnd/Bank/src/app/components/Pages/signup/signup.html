@@ -1,0 +1,50 @@
+<div class="container">
+    <app-lable></app-lable>
+    <span class="signup-text">Sign Up</span>
+    <form [formGroup]="inputData">
+
+    <label for="userName">User Name</label>
+    <input type="text" id="userName" [class.reqired-input]="showReqiredUserName"
+    (click)="showReqiredUserName = false"
+    formControlName="userName">
+
+    <span class="reqired" [class.showReqired]="showReqiredUserName">*this filed is reqired</span>
+
+    <label for="email" >Email</label>
+    <input type="email" id="email" [class.reqired-input]="showReqiredEmail || showWrongEmail"
+    (click)="showReqiredEmail = false"
+    formControlName="email">
+
+    <div class="column">
+    <span class="reqired" [class.showReqired]="showReqiredEmail">*this filed is reqired</span>
+    <span class="reqired" [class.showReqired]="showWrongEmail">*wrong email</span>
+    </div>
+
+    <label for="phone">Phone</label>
+    <input type="text" id="phone" [class.reqired-input]="showReqiredPhone || showWrongPhoneNumber"
+    (click)="showReqiredPhone = false"
+    formControlName="phone">
+
+    <div class="column">
+    <span class="reqired" [class.showReqired]="showReqiredPhone">*this filed is reqired</span>
+    <span class="reqired" [class.showReqired]="showWrongPhoneNumber">*wrong phone number</span>
+    </div>
+
+    <label for="password" >Password</label>
+    <input type="password" id="password" [class.reqired-input]="showReqiredPassword"
+    (click)="showReqiredPassword = false"
+    formControlName="password">
+
+    <span class="reqired" [class.showReqired]="showReqiredPassword">*this filed is reqired</span>
+    <button class="signup-button" (click)="signup()">Sign Up</button>
+    </form>
+    <div class="row">
+    <span class="login-text">Already Have An Account?</span>
+    <button class="login-button" (click)="navigateToLogin()">Login</button>
+    </div>
+</div>
+
+@if(showMessage)
+{
+    <app-message [message]="message" (showMessage)="showMessage = $event"></app-message>
+}

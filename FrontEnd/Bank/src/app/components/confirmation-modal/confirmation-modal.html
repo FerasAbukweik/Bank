@@ -1,0 +1,12 @@
+    <span class="forFlex"></span>
+<div class="confirmation-modal container">
+    <span class="header-text">{{toViewData.title}}</span>
+    <span class="amount-text">{{toViewData.subTitle}}</span>
+<input type="text" (input)="currStatus.value = $event.target.value">
+
+<div class="row">
+        <button class="button confirm" (click)="confirm()">Confirm</button>
+    <button class="button cancel" (click)="cancel()">Cancel</button>
+</div>
+</div>
+    <span class="forFlex"></span>

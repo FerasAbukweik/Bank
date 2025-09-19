@@ -4,6 +4,6 @@
     {
         public long id { get; set; }
         public long amount { get; set; }
-        public Boolean deposit { get; set; }
+        public Boolean isDeposit { get; set; }
     }
 }

@@ -1,16 +1,15 @@
     <aside>
-  <div class="logo">
-    <i class="fa-solid fa-money-bill-trend-up logo-icon"></i>
-    <span class="logo-text">BANK</span>
-  </div>
-
-  <nav class="menu">
+      <div class="lable">
+      <app-lable></app-lable>
+      </div>
+      <nav class="menu">
     <ul>
       <li [class.active]="currSideBarTile == 1" [routerLink]='"/dashBoard"' (click)="changeTile(1)">Dashboard</li>
       <li [class.active]="currSideBarTile == 2" [routerLink]='"/accounts"' (click)="changeTile(2)">Accounts</li>
       <li [class.active]="currSideBarTile == 3" [routerLink]='"/transfers"' (click)="changeTile(3)">Transfers</li>
       <li [class.active]="currSideBarTile == 4" [routerLink]='"/transactions"' (click)="changeTile(4)">Transactions</li>
       <li [class.active]="currSideBarTile == 5" [routerLink]='"/profile-settings"' (click)="changeTile(5)">Profile / Settings</li>
+      <li [class.active]="currSideBarTile == 6" class="logout" (click)="logout()">Logout</li>
     </ul>
   </nav>
 </aside>

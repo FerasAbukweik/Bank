@@ -1,17 +1,20 @@
  <div class="account-container">
+    <div class="header-row">
         <span class="container-text-header">{{account.type}}</span>
+        <app-button [buttonData]="buttonData" (isClicked)="removeAccount()"></app-button>
+        </div>
         <div class="row">
             <span class="balance">${{account.balance}}</span>
-            <button class="white-button" (click)="openDialog('Deposit')"> Deposit </button>
-            <button class="white-button" (click)="openDialog('Withdraw')">Withdraw</button>
+            <button class="white-button" (click)="openModal('Deposit')"> Deposit </button>
+            <button class="white-button" (click)="openModal('Withdraw')">Withdraw</button>
         </div>
 
-    @if(messageModal.showModal)
+    @if(showModal)
     {
-        <app-confirmation-modal [modalData]="ModalData" (message_modal)="messageModal = $event"></app-confirmation-modal>
+        <app-confirmation-modal [toViewData]="toViewData" (toReturn)="manageToReturn($event)" ></app-confirmation-modal>
     }
-    @if (messageModal.showMessage)
+    @if (showMessage)
     {
-        <app-message [message]="messageModal.message" (showMessage)="messageModal.showMessage = $event"></app-message>
+        <app-message [message]="message" (showMessage)="showMessage = $event"></app-message>
     }
 </div>

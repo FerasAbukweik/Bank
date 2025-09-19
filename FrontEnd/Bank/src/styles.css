@@ -17,7 +17,7 @@
 }
 
 .large-card{
-  min-height: 300px;
+  min-height: 250px;
 }
 
 .container{
@@ -40,6 +40,10 @@
     border-radius: 0.45rem;
 }
 
+.white-button:hover{
+  cursor: pointer;
+}
+
 .button{
     margin: 20px 10px;
     width: 190px;
@@ -47,6 +51,7 @@
     border-radius: 0.4rem;
     border: none;
     font-size: 1.5rem;
+    cursor: pointer;
 }
 .confirm{
     color: white;

@@ -5,6 +5,7 @@
 .dashboard{
   display: flex;
   flex-direction: column;
+  height: 100vh;
 }
 .containers-row {
   display: flex;
@@ -21,7 +22,5 @@ app-transactions , app-total-balance , app-recent-activities{
 
 app-accounts-container{
     flex: 1;
-    display: flex;
-    flex-direction: column;
     margin: 25px;
 }

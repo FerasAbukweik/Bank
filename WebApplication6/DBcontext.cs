@@ -22,7 +22,7 @@ namespace WebApplication6
                 new AccountType { id = 5, type = "NRI/Accounts" });
 
             modelBuilder.Entity<BankRole>().HasData(
-                new BankRole { id = 1, role = 447, roleName = "Client" }, 
+                new BankRole { id = 1, role = 32703, roleName = "Client" }, //=> fornow eveything except managing roles and filter users
                 new BankRole { id = 2, role = -1 , roleName = "Admin" }); // -1 => Full Access
 
             modelBuilder.Entity<User>().HasData(

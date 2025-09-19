@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AddTransaction } from '../../interfaces/transfers/AddTransaction';
+import { AddTransaction } from '../../interfaces/transfer/AddTransaction';
 
 @Injectable({
   providedIn: 'root'
@@ -33,6 +33,13 @@ public postAddTransfer(data: AddTransaction) {
     fromUserId: data.fromUserId ?? null,
     toUserId: data.toUserId ?? null
   });
+}
+
+public getTransactions(userId : number)
+{
+  let params = new HttpParams()
+  params = params.set("userId" , userId);
+  return this._http.get(this.apiUrl + "/getTransactions" , {params});
 }
   
 }

@@ -8,14 +8,14 @@ using WebApplication6.Models;
 
 namespace WebApplication6.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class AccountsController : ControllerBase
     {
         private readonly DBcontext _dbcontext;
         private int role => int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value ?? "0");
-        private long userId => int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value ?? "0");
+        private long token_userId => int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value ?? "0");
 
         public AccountsController(DBcontext dbcontext)
         {
@@ -26,7 +26,7 @@ namespace WebApplication6.Controllers
         public IActionResult add([FromBody] AddAccountDTO toAddData)
         {
 
-            if (role != -1 && !((role & (int)accountRoles.add) == (int)accountRoles.add && userId == toAddData.user_id))
+            if (role != -1 && !((role & (int)accountRoles.add) == (int)accountRoles.add && token_userId == toAddData.user_id))
             {
                 return BadRequest("Unauthorized");
             }
@@ -95,7 +95,7 @@ namespace WebApplication6.Controllers
         public IActionResult update([FromBody] UpdateAccountDTO toUpdate)
         {
 
-            if (role != -1 && !((role & (int)accountRoles.update) == (int)accountRoles.update && userId == toUpdate.user_id))
+            if (role != -1 && !((role & (int)accountRoles.update) == (int)accountRoles.update && token_userId == toUpdate.user_id))
             {
                 return BadRequest("Unauthorized");
             }
@@ -127,23 +127,20 @@ namespace WebApplication6.Controllers
         }
 
         [HttpDelete("delete")] //8
-        public IActionResult delete(long id)
+        public IActionResult delete(long accountId)
         {
+            var account = _dbcontext.accounts.FirstOrDefault(a => a.id == accountId);
+            if(account == null) { return BadRequest("Account Not Found"); }
 
-            if (role != -1 && !((role & (int)accountRoles.delete) == (int)accountRoles.delete && userId == id))
+            if (role != -1 && !((role & (int)accountRoles.delete) == (int)accountRoles.delete && token_userId == account.user_id))
             {
                 return BadRequest("Unauthorized");
             }
 
             try
             {
-                var foundAccount = _dbcontext.accounts.FirstOrDefault(a => a.id == id);
-                if (foundAccount == null)
-                {
-                    return BadRequest("Account Not Found");
-                }
 
-                _dbcontext.accounts.Remove(foundAccount);
+                _dbcontext.accounts.Remove(account);
                 _dbcontext.SaveChanges();
                 return Ok();
             }
@@ -153,26 +150,14 @@ namespace WebApplication6.Controllers
             }
         }
 
-        [HttpGet("getTotalBalance")]
-        public IActionResult getTotalBalance(long id)
-        {
-            try
-            {
-                long totalSum = 0;
-                foreach (var account in _dbcontext.accounts)
-                {
-                    totalSum += account.balance;
-                }
-                return Ok(totalSum);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
+        
         [HttpGet("getDashboardAccounts")]
         public IActionResult getDashboardAccounts(long userId)
         {
+            if (role != -1 && !((role & (int)accountRoles.getDashboardAccounts) == (int)accountRoles.getDashboardAccounts && token_userId == userId))
+            {
+                return BadRequest("Unauthorized");
+            }
             try
             {
                 var foundAccounts = from account in _dbcontext.accounts.Where(a => a.user_id == userId)
@@ -197,7 +182,8 @@ namespace WebApplication6.Controllers
             try
             {
                 var foundUser = _dbcontext.accounts.FirstOrDefault(a => a.id == accountId);
-                return Ok(foundUser?.user_id ?? null);
+                if(foundUser == null) { return BadRequest("Account Not Found"); }
+                return Ok(foundUser.user_id);
             }
             catch (Exception ex)
             {

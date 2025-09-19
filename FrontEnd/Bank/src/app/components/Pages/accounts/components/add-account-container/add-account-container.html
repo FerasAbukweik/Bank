@@ -1,0 +1,14 @@
+<div class="container">
+    <span class="header">Add Account</span>
+    <label for="options" class="type">Type</label>
+    <select id="options" class="options" [(ngModel)]="option">
+        @for(type of accountTypes; track type)
+        {
+            <option value={{type.id}}>{{type.type}}</option>
+        }
+    </select>
+    <div class="row">
+        <button class="button" (click)="sendData(false)">Cancel</button>
+        <button class="button save-button" (click)="sendData(true)">Save</button>
+    </div>
+</div>

@@ -13,7 +13,7 @@ export class Transactions implements OnInit{
   constructor(private _transferServices : TransfersServices){}
 
   ngOnInit(): void {
-    this.updateNumOfTransactions(2)
+    this.updateNumOfTransactions(+localStorage.getItem("userId")!)
   }
 
   updateNumOfTransactions(userId : number)

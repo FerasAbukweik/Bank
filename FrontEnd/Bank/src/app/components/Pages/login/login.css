@@ -1,0 +1,96 @@
+:host{
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container{
+    flex: 1;
+    margin : 0;
+    display: flex;
+    flex-direction: column;
+    margin: 0 70px;
+    max-width: 500px;
+    padding: 25px 25px 5px 25px;
+}
+
+
+app-lable{
+    margin-top: 25px;
+    margin-bottom: 15px;
+}
+
+.login-text{
+    font-size: 25px;
+    font-weight: bold;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+label{
+    display: block;
+    margin-top: 10px;
+}
+
+input{
+    height: 40px;
+    border-radius: 0.4rem;
+    border: 2px solid #ebeaea;
+    width: 100%;
+    padding-left: 10px;
+    font-size: 18px;
+}
+
+
+
+.login-button , .signUp-button{
+    align-self: center;
+}
+
+.login-button{
+    background-color: #598CD9;
+    color: white;
+    margin-bottom: 10px;
+    height: 40px;
+    font-size: 1.3rem;
+    width: 100%;
+    border-radius: 0.4rem;
+    border: none;
+    margin-top: 15px;
+
+}
+
+.signUp-button{
+    margin-bottom: 10px;
+    color: #598CD9;
+    margin-top: 6px;
+    border: none;
+    background-color: rgba(255, 0, 0, 0);
+}
+.signUp-button:hover , .login-button:hover{
+  cursor: pointer;
+}
+
+.reqired{
+    margin-bottom: 10px;
+    color: red;
+    display: none;
+}
+
+.reqired-input{
+    border: 2px solid red;
+}
+
+.showReqired{
+    display: block;
+}
+
+
+@media(max-width : 600px)
+{
+    .container{
+     min-width: 300px;
+    }
+}

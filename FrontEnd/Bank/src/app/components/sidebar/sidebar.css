@@ -1,25 +1,8 @@
-
 aside {
   flex: 1;
   background-color: #21354d;
   color: #fff;
   padding: 1.5rem 1rem;
-}
-
-.logo {
-  align-self: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 2rem;
-  font-weight: bold;
-  margin-bottom: 2rem;
-  margin-top: 40px;
-  font-weight: 400;
-}
-
-.logo-icon {
-  margin-right: 10px;
 }
 
 .menu {
@@ -36,7 +19,6 @@ aside {
   border-radius: 8px;
   font-size: 1.1rem;
   cursor: pointer;
-  transition: background-color 0.2s;
 }
 
 .menu ul li:hover {
@@ -46,4 +28,17 @@ aside {
 .menu ul li.active {
   background-color: #2b425e;
   font-weight: bold;
+}
+
+.lable {
+  margin-bottom: 2rem;
+  margin-top: 40px;
+}
+
+.logout{
+  text-align: center;
+  margin-top: 50px !important;
+  background-color: red;
+  font-weight: bold;
+  font-size: 25px !important;
 }

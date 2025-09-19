@@ -3,7 +3,7 @@ import { TotalBalance } from './dashboard-components/total-balance/total-balance
 import { Transactions } from './dashboard-components/transactions/transactions';
 import { AccountsContainer } from './dashboard-components/accounts-container/accounts-container';
 import { TransfersServices } from '../../../services/transfers-services/transfers-services';
-import { RecentActivitie } from '../../../interfaces/transfers/recentActivities';
+import { RecentActivitie } from '../../../interfaces/transfer/recentActivities';
 import { RecentActivities } from './dashboard-components/recent-activities/recent-activities';
 
 @Component({
@@ -19,7 +19,7 @@ allRecentActivities : RecentActivitie[] = [];
 constructor(private _transfersServices : TransfersServices){}
 
 ngOnInit(): void {
-  this.updateRecentActivities(2);
+  this.updateRecentActivities(+localStorage.getItem("userId")!);
 }
 
 private updateRecentActivities(userId : number){
@@ -31,7 +31,7 @@ this._transfersServices.getRecentActivities(userId).subscribe({
       let activity : RecentActivitie = {
       id : ret_activity.id,
       amount : ret_activity.amount,
-      deposit : ret_activity.deposit
+      isDeposit : ret_activity.isDeposit
     }
     this.allRecentActivities.push(activity);
     });

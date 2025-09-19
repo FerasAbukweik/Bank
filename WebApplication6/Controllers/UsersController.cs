@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
 using System.Security.Claims;
 using WebApplication6.DTOs.Role;
 using WebApplication6.DTOs.Users;
@@ -13,8 +14,8 @@ namespace WebApplication6.Controllers
     public class UsersController : ControllerBase
     {
         private DBcontext _Dbcontext;
-        private int Role => int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value ?? "0");
-        private long UserId => int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value ?? "0");
+        private int tokenRole => int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value ?? "0");
+        private long tokenUserId => long.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value ?? "0");
 
         public UsersController(DBcontext dbcontext)
         {
@@ -25,9 +26,9 @@ namespace WebApplication6.Controllers
         [HttpGet("filter")]
         public IActionResult filter([FromQuery] FilterUsersDTO filterData)
         {
-            if (Role != -1 && (Role & (int)usersRoles.filter) != (int)usersRoles.filter)
+            if (tokenRole != -1 && (tokenRole & (int)usersRoles.filter) != (int)usersRoles.filter)
             {
-                return BadRequest("User does not have permission to filter users");
+                return BadRequest("Unauthorized");
             }
 
             try
@@ -56,11 +57,29 @@ namespace WebApplication6.Controllers
                                        phone = user.phone,
                                        createdAt = user.createdAt,
                                        bankRole_id = user.BankRole_id,
-                                       role = user.bankRole.role,
-                                       roleName = user.bankRole.roleName
+                                       role = user.bankRole != null ? user.bankRole.role : 0,
+                                       roleName = user.bankRole != null ? user.bankRole.roleName : "Missing Role"
                                    };
 
                 return Ok(filteredData);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("getUserById")]
+        public IActionResult getUserById(long userId)
+        {
+            if (tokenRole != -1 && ((tokenRole & (int)usersRoles.getUserById) != (int)usersRoles.getUserById && tokenUserId == userId))
+            {
+                return BadRequest("Unauthorized");
+            }
+            try
+            {
+                var user = _Dbcontext.users.FirstOrDefault(u => u.id == userId);
+                return Ok(user);
             }
             catch (Exception ex)
             {
@@ -109,7 +128,7 @@ namespace WebApplication6.Controllers
         [HttpPut("update")]
         public IActionResult update([FromBody] UpdateUserDTO toUpdate)
         {
-            if (Role != -1 && !((Role & (int)usersRoles.update) == (int)usersRoles.update && UserId == toUpdate.id))
+            if (tokenRole != -1 && !((tokenRole & (int)usersRoles.update) == (int)usersRoles.update && tokenUserId == toUpdate.id))
             {
                 return BadRequest("User does not have permission to update this user");
             }
@@ -137,34 +156,12 @@ namespace WebApplication6.Controllers
             }
         }
 
-        [Authorize(Roles = "-1")]
-        [HttpPut("updateRole")]
-        public IActionResult updateRole([FromBody] UpdateUserRoleDTO toUpdate)
-        {
-            try
-            {
-                User? user = _Dbcontext.users.FirstOrDefault(u => u.id == toUpdate.id);
-
-                if (user == null)
-                {
-                    return BadRequest("User Not Found");
-                }
-
-                user.BankRole_id = toUpdate.bankRole_Id;
-                _Dbcontext.SaveChanges();
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
 
         [Authorize] //256
         [HttpDelete("delete")]
         public IActionResult delete([FromQuery] long id)
         {
-            if (Role != -1 && !((Role & (int)usersRoles.delete) == (int)usersRoles.delete && UserId == id))
+            if (tokenRole != -1 && !((tokenRole & (int)usersRoles.delete) == (int)usersRoles.delete && tokenUserId == id))
             {
                 return BadRequest("User does not have permission to delete this user");
             }
@@ -181,6 +178,29 @@ namespace WebApplication6.Controllers
             catch (Exception ex)
             {
                 return BadRequest(ex);
+            }
+        }
+
+        [Authorize] //1024
+        [HttpGet("getTotalBalance")]
+        public IActionResult getTotalBalance(long userId)
+        {
+            if (tokenRole != -1 && !((tokenRole & (int)usersRoles.getTotalBalance) == (int)usersRoles.getTotalBalance && tokenUserId == userId))
+            {
+                return BadRequest("Unauthorized");
+            }
+            try
+            {
+                long totalSum = 0;
+                foreach (var account in _Dbcontext.accounts.Where(a => a.user_id == userId))
+                {
+                    totalSum += account.balance;
+                }
+                return Ok(totalSum);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
             }
         }
     }

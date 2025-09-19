@@ -1,5 +1,5 @@
 <div class="profile-settings">
     <span class="title">Profile / Settings</span>
-    <app-name-gmail></app-name-gmail>
+    <app-name-gmail [userName]="user?.userName ?? 'userName'" [email]="user?.email ?? 'Email'"></app-name-gmail>
     <app-change-password></app-change-password>
 </div>
